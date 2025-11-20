@@ -16,7 +16,7 @@
 
         <!-- LOGO -->
         <div class="flex justify-center mb-5">
-            <img src="https://bpjsketenagakerjaan.go.id/images/logobpjstk.png"
+            <img src="{{ asset('assets/icon-bpjstk.png') }}"
                  alt="BPJS Ketenagakerjaan" class="h-16">
         </div>
 
