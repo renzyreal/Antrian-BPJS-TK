@@ -3,22 +3,6 @@
 @section('title', 'Detail Antrian - Admin')
 @section('header-title', 'Detail Antrian')
 
-@section('header-button')
-<div class="flex space-x-2">
-    <a href="{{ route('admin.antrian') }}" class="bg-blue-500 hover:bg-blue-400 px-4 py-2 rounded-lg">
-        <i class="fas fa-arrow-left mr-2"></i>Kembali
-    </a>
-    <form action="{{ route('admin.antrian.destroy', $antrian->id) }}" method="POST" 
-          onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="bg-red-500 hover:bg-red-400 px-4 py-2 rounded-lg">
-            <i class="fas fa-trash mr-2"></i>Hapus
-        </button>
-    </form>
-</div>
-@endsection
-
 @section('content')
 <div class="max-w-4xl mx-auto">
     <!-- Info Antrian -->

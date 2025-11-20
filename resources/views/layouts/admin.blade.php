@@ -19,7 +19,10 @@
                     </h1>
                     <div class="flex items-center space-x-4">
                         <div class="text-sm">
-                            <span class="bg-blue-500 px-3 py-1 rounded-full">{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</span>
+                            <span class="bg-blue-500 px-3 py-1 rounded-full">
+                                {{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }} | 
+                                <span id="live-clock" class="font-mono">{{ \Carbon\Carbon::now()->format('H:i:s') }}</span> WITA
+                            </span>
                         </div>
                         @hasSection('header-button')
                             @yield('header-button')
@@ -108,4 +111,15 @@
 
     @stack('scripts')
 </body>
+<script>
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('live-clock').textContent = `${hours}:${minutes}:${seconds}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
 </html>

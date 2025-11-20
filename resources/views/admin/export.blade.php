@@ -4,14 +4,14 @@
 @section('header-title', 'Export Data')
 
 @section('content')
-<div class="max-w-2xl mx-auto">
+<div class="max-w-4xl mx-auto">
     <!-- Export Form -->
     <div class="bg-white rounded-lg shadow p-6 mb-6">
         <h2 class="text-lg font-semibold text-gray-800 mb-4">Export Data Antrian</h2>
         
         <form action="{{ route('admin.export.download') }}" method="GET" class="space-y-4">
             <!-- Filter Tanggal -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
                     <input type="date" name="start_date" 
@@ -36,11 +36,13 @@
                 </div>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Tertentu</label>
-                <input type="date" name="tanggal" 
-                       class="w-full border border-gray-300 rounded-lg px-3 py-2"
-                       value="{{ request('tanggal') }}">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div class="lg:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Tertentu</label>
+                    <input type="date" name="tanggal" 
+                           class="w-full border border-gray-300 rounded-lg px-3 py-2"
+                           value="{{ request('tanggal') }}">
+                </div>
             </div>
 
             <!-- Info -->
@@ -52,12 +54,12 @@
             </div>
 
             <!-- Submit Buttons -->
-            <div class="flex space-x-4 pt-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                 <button type="submit" 
-                        class="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 font-semibold">
+                        class="w-full bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 font-semibold flex items-center justify-center">
                     <i class="fas fa-file-excel mr-2"></i>Export Excel
                 </button>
-                <a href="{{ route('admin.export.form') }}" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 font-semibold flex items-center justify-center">
+                <a href="{{ route('admin.export.form') }}" class="w-full bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 font-semibold flex items-center justify-center">
                     <i class="fas fa-refresh mr-2"></i>Reset
                 </a>
             </div>
@@ -96,26 +98,6 @@
                 <h3 class="font-semibold text-orange-800">Besok</h3>
                 <p class="text-sm text-orange-600">Export data antrian besok</p>
             </a>
-        </div>
-    </div>
-
-    <!-- Info Format -->
-    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mt-6">
-        <h3 class="text-lg font-semibold text-yellow-800 mb-2">
-            <i class="fas fa-file-excel mr-2"></i>Format File Excel
-        </h3>
-        <div class="text-sm text-yellow-700">
-            <p class="mb-2">Data akan diexport dalam format Excel (.xlsx) dengan kolom:</p>
-            <ul class="list-disc list-inside space-y-1">
-                <li><strong>No Antrian</strong> - Nomor urut antrian</li>
-                <li><strong>Tanggal</strong> - Tanggal antrian (YYYY-MM-DD)</li>
-                <li><strong>Jam Kedatangan</strong> - Jam yang ditentukan</li>
-                <li><strong>Nama Tenaga Kerja</strong> - Nama lengkap tenaga kerja</li>
-                <li><strong>NIK Tenaga Kerja</strong> - Nomor Induk Kependudukan</li>
-                <li><strong>Nama Ahli Waris</strong> - Nama ahli waris</li>
-                <li><strong>Nomor WhatsApp</strong> - Nomor telepon yang terdaftar</li>
-                <li><strong>Waktu Pendaftaran</strong> - Timestamp saat mendaftar</li>
-            </ul>
         </div>
     </div>
 </div>
