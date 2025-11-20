@@ -12,29 +12,61 @@
     <div class="min-h-screen">
         <!-- Header -->
         <header class="bg-blue-600 text-white shadow-lg">
-            <div class="container mx-auto px-4 py-4">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-2xl font-bold">
-                        <i class="fas fa-tachometer-alt mr-2"></i>@yield('header-title', 'Admin Dashboard')
-                    </h1>
-                    <div class="flex items-center space-x-4">
-                        <div class="text-sm">
-                            <span class="bg-blue-500 px-3 py-1 rounded-full">
-                                {{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }} | 
-                                <span id="live-clock" class="font-mono">{{ \Carbon\Carbon::now()->format('H:i:s') }}</span> WITA
-                            </span>
-                        </div>
-                        @hasSection('header-button')
-                            @yield('header-button')
-                        @else
-                            <a href="{{ route('admin.dashboard') }}" class="bg-blue-500 hover:bg-blue-400 px-4 py-2 rounded-lg">
-                                <i class="fas fa-arrow-left mr-2"></i>Kembali
-                            </a>
-                        @endif
+    <div class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+
+            <h1 class="text-2xl font-bold">
+                <i class="fas fa-tachometer-alt mr-2"></i>
+                @yield('header-title', 'Admin Dashboard')
+            </h1>
+
+            <div class="flex items-center space-x-4">
+
+                <!-- TANGGAL & JAM -->
+                <div class="text-sm">
+                    <span class="bg-blue-500 px-3 py-1 rounded-full">
+                        {{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }} | 
+                        <span id="live-clock" class="font-mono">{{ \Carbon\Carbon::now()->format('H:i:s') }}</span> WITA
+                    </span>
+                </div>
+
+                <!-- PROFIL DROPDOWN -->
+                <div class="relative">
+                    <button onclick="toggleProfileMenu()" 
+                            class="bg-blue-500 hover:bg-blue-400 px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-user mr-2"></i> 
+                        {{ Auth::user()->nama }}
+                    </button>
+
+                    <!-- MENU DROPDOWN -->
+                    <div id="profile-menu" 
+                        class="absolute right-0 mt-2 w-40 bg-white text-black rounded-lg shadow-lg hidden z-50">
+
+                        <a href="{{ route('admin.edit') }}" 
+                        class="block px-4 py-2 hover:bg-gray-100">
+                            <i class="fas fa-edit mr-2"></i> Edit Profil
+                        </a>
+
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" 
+                                    class="w-full text-left px-4 py-2 hover:bg-gray-100">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
+
+
+                @hasSection('header-button')
+                    @yield('header-button')
+                @endif
+
             </div>
-        </header>
+        </div>
+    </div>
+</header>
+
 
         <!-- Navigation -->
         <nav class="bg-white shadow-sm">
@@ -122,4 +154,22 @@
     setInterval(updateClock, 1000);
     updateClock();
 </script>
+
+<script>
+function toggleProfileMenu() {
+    const menu = document.getElementById('profile-menu');
+    menu.classList.toggle('hidden');
+}
+
+// Tutup dropdown jika klik di luar
+document.addEventListener('click', function (e) {
+    const menu = document.getElementById('profile-menu');
+    const btn = e.target.closest('button');
+
+    if (!menu.contains(e.target) && !btn) {
+        menu.classList.add('hidden');
+    }
+});
+</script>
+
 </html>
