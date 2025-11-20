@@ -135,7 +135,7 @@
 
         {{-- KUOTA --}}
         <div class="mb-4">
-            <p id="kuotaInfo" class="text-sm text-blue-600">Cek kuota...</p>
+            <p id="kuotaInfo" class="text-sm text-blue-600">Cek antrian...</p>
         </div>
 
         {{-- BUTTON --}}
@@ -149,6 +149,9 @@
                 </svg>
             </div>
         </button>
+        <p class="text-center text-sm text-red-600 mt-3">
+            Pastikan semua form telah diisi dengan benar sebelum mengambil antrian.
+        </p>
     </form>
 
 </div>
@@ -268,18 +271,18 @@ $(document).ready(function() {
 
         $.get("{{ route('antrian.kuota') }}", { tanggal: tgl }, function(res) {
             if (res.tersisa <= 0) {
-                $('#kuotaInfo').text("Kuota penuh untuk tanggal ini (0/15 tersisa)")
+                $('#kuotaInfo').text("antrian habis untuk tanggal ini silahkan pilih tanggal lain")
                                .removeClass().addClass("text-sm text-red-600");
                 submitBtn.prop('disabled', true);
             } else {
-                $('#kuotaInfo').text("Sisa kuota: " + res.tersisa + " dari 15")
+                $('#kuotaInfo').text("Sisa antrian: " + res.tersisa )
                                .removeClass().addClass("text-sm text-green-600");
                 // Only enable if WhatsApp is verified dan NIK valid
                 const isNIKValid = nikInput.val().length === 16;
                 submitBtn.prop('disabled', !(isVerified && isNIKValid));
             }
         }).fail(function() {
-            $('#kuotaInfo').text("Gagal memuat kuota").removeClass().addClass("text-sm text-red-600");
+            $('#kuotaInfo').text("Gagal memuat antrian").removeClass().addClass("text-sm text-red-600");
         });
     }
 
