@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AntrianExport;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AdminController extends Controller
 {
@@ -19,12 +20,28 @@ class AdminController extends Controller
     {
         $today = Carbon::today('Asia/Makassar');
         $tomorrow = Carbon::tomorrow('Asia/Makassar');
+        $startOfMonth = Carbon::now('Asia/Makassar')->startOfMonth();
+        $startOfWeek = Carbon::now('Asia/Makassar')->startOfWeek();
+        $lastMonthStart = Carbon::now('Asia/Makassar')->subMonth()->startOfMonth();
+        $lastMonthEnd = Carbon::now('Asia/Makassar')->subMonth()->endOfMonth();
         
         $stats = [
             'today' => Antrian::where('tanggal', $today)->count(),
             'tomorrow' => Antrian::where('tanggal', $tomorrow)->count(),
             'total' => Antrian::count(),
             'verified' => VerifikasiWA::where('terverifikasi', true)->count(),
+            
+            // Tambahan stats untuk trend comparison
+            'this_month' => Antrian::whereBetween('tanggal', [$startOfMonth, $today])->count(),
+            'this_week' => Antrian::whereBetween('tanggal', [$startOfWeek, $today])->count(),
+            'last_month_total' => Antrian::whereBetween('tanggal', [$lastMonthStart, $lastMonthEnd])->count(),
+            
+            // Stats tambahan untuk informasi lebih detail
+            'yesterday' => Antrian::where('tanggal', $today->copy()->subDay())->count(),
+            'last_week_total' => Antrian::whereBetween('tanggal', [
+                $startOfWeek->copy()->subWeek(),
+                $startOfWeek->copy()->subDay()
+            ])->count(),
         ];
 
         // Antrian hari ini
@@ -229,5 +246,35 @@ class AdminController extends Controller
             'antrian', 'blocks', 'tanggal', 
             'totalKuota', 'totalTerisi', 'totalTersisa'
         ));
+    }
+
+    // ===============================
+    //  QR CODE - VIEW
+    // ===============================
+    public function qrCode()
+    {
+        // Generate QR Code untuk URL antrian
+        $url = route('antrian.form');
+        $qr = QrCode::size(300)->generate($url);
+        
+        // Stats untuk ditampilkan
+        $stats = [
+            'today' => Antrian::whereDate('tanggal', now()->format('Y-m-d'))->count(),
+            'tomorrow' => Antrian::whereDate('tanggal', now()->addDay()->format('Y-m-d'))->count(),
+        ];
+
+        return view('admin.qr', compact('qr', 'stats'));
+    }
+
+    // ===============================
+    //  QR CODE - DOWNLOAD/PRINT
+    // ===============================
+    public function qrCodeDownload()
+    {
+        // Generate QR Code untuk URL antrian
+        $url = route('antrian.form');
+        $qr = QrCode::size(400)->generate($url);
+
+        return view('admin.qr-download', compact('qr'));
     }
 }
