@@ -6,12 +6,12 @@
 @section('content')
 <div class="max-w-8xl mx-auto">
     <!-- Header Banner -->
-    <div class="bg-gradient-to-r from-pink-600 to-rose-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
+    <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
         <div class="relative z-10">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div class="flex-1">
                     <h1 class="text-2xl font-bold mb-2">Edit Profil Admin</h1>
-                    <p class="text-pink-100 opacity-90">Kelola informasi akun dan keamanan Anda</p>
+                    <p class="text-green-100 opacity-90">Kelola informasi akun dan keamanan Anda</p>
                 </div>
                 <div class="mt-4 lg:mt-0 lg:ml-6">
                     <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center min-w-[120px]">
@@ -47,7 +47,7 @@
 
             <!-- Error Messages -->
             @if ($errors->any())
-            <div class="bg-gradient-to-r from-red-50 to-rose-50 border-l-4 border-red-500 rounded-xl p-4 mb-6 animate-fade-in">
+            <div class="bg-gradient-to-r from-red-50 to-emerald-50 border-l-4 border-red-500 rounded-xl p-4 mb-6 animate-fade-in">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <i class="fas fa-exclamation-triangle text-red-500 text-lg"></i>
@@ -69,7 +69,7 @@
             <!-- Profile Form -->
             <div class="bg-white rounded-2xl shadow-lg p-6 card-hover flex-1">
                 <div class="flex items-center mb-4">
-                    <div class="p-3 rounded-xl bg-pink-50 text-pink-600 mr-4">
+                    <div class="p-3 rounded-xl bg-green-50 text-green-600 mr-4">
                         <i class="fas fa-user-edit text-xl"></i>
                     </div>
                     <div class="flex-1">
@@ -85,11 +85,11 @@
                     <!-- NAMA -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700 flex items-center">
-                            <i class="fas fa-user mr-2 text-pink-500"></i>
+                            <i class="fas fa-user mr-2 text-green-500"></i>
                             Nama Lengkap
                         </label>
                         <input type="text" name="nama" value="{{ old('nama', $user->nama) }}" required
-                            class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                            class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                             placeholder="Masukkan nama lengkap Anda">
                         @error('nama')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -118,7 +118,7 @@
                             <span class="ml-2 text-xs text-gray-500 font-normal">(opsional)</span>
                         </label>
                         <input type="password" name="password_baru"
-                            class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                            class="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
                             placeholder="Kosongkan jika tidak ingin mengubah">
                         @error('password_baru')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -146,7 +146,7 @@
                     <!-- Current Password for Security -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700 flex items-center">
-                            <i class="fas fa-key mr-2 text-green-500"></i>
+                            <i class="fas fa-key mr-2 text-pink-500"></i>
                             Password Saat Ini
                             <span class="ml-2 text-xs text-gray-500 font-normal">(wajib untuk konfirmasi)</span>
                         </label>
@@ -173,7 +173,7 @@
             <!-- User Info Card -->
             <div class="bg-white rounded-2xl shadow-lg p-6 card-hover flex-1">
                 <div class="text-center mb-6">
-                    <div class="w-14 h-14 bg-gradient-to-r from-pink-500 to-rose-600 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4 shadow-lg">
+                    <div class="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-4 shadow-lg">
                         {{ substr($user->nama, 0, 1) }}
                     </div>
                     <h3 class="font-semibold text-gray-800 text-xl mb-1">{{ $user->nama }}</h3>

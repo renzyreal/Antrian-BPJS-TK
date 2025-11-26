@@ -6,10 +6,10 @@
 @section('content')
 <div class="max-w-8xl mx-auto">
     <!-- Header Banner -->
-    <div class="bg-gradient-to-r from-pink-600 to-rose-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
+    <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
         <div class="relative z-10">
             <h1 class="text-2xl font-bold mb-2">Manajemen Data Antrian</h1>
-            <p class="text-pink-100 opacity-90">Kelola dan pantau seluruh data antrian JKM BPJS Ketenagakerjaan</p>
+            <p class="text-green-100 opacity-90">Kelola dan pantau seluruh data antrian JKM BPJS Ketenagakerjaan</p>
         </div>
         <div class="absolute right-4 top-1/2 transform -translate-y-1/2 opacity-20">
             <i class="fas fa-list-ol text-6xl"></i>
@@ -21,19 +21,19 @@
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
         <!-- Total Data -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-pink-500 relative overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-green-500 relative overflow-hidden">
             <!-- Background Pattern -->
-            <div class="absolute top-0 right-0 w-20 h-20 bg-pink-50 rounded-full -mr-6 -mt-6"></div>
-            <div class="absolute bottom-0 left-0 w-12 h-12 bg-pink-100 rounded-full -ml-4 -mb-4"></div>
+            <div class="absolute top-0 right-0 w-20 h-20 bg-green-50 rounded-full -mr-6 -mt-6"></div>
+            <div class="absolute bottom-0 left-0 w-12 h-12 bg-green-100 rounded-full -ml-4 -mb-4"></div>
             
             <div class="flex items-center relative z-10">
-                <div class="p-3 rounded-xl bg-pink-50 text-pink-600 shadow-sm">
+                <div class="p-3 rounded-xl bg-green-50 text-green-600 shadow-sm">
                     <i class="fas fa-database text-xl"></i>
                 </div>
                 <div class="ml-4 flex-1">
                     <p class="text-sm font-medium text-gray-600 flex items-center">
                         <span>Total Data</span>
-                        <span class="ml-2 text-xs bg-pink-100 text-pink-800 px-2 py-1 rounded-full">
+                        <span class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
                             All Time
                         </span>
                     </p>
@@ -44,7 +44,7 @@
                         </span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
-                        <div class="bg-gradient-to-r from-pink-500 to-pink-600 h-2 rounded-full transition-all duration-500" 
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full transition-all duration-500" 
                             style="width: 100%"></div>
                     </div>
                     <div class="flex justify-between text-xs text-gray-500">
@@ -169,10 +169,10 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-calendar-day mr-2 text-pink-500"></i>Filter Tanggal
+                        <i class="fas fa-calendar-day mr-2 text-green-500"></i>Filter Tanggal
                     </label>
                     <input type="date" name="tanggal" value="{{ request('tanggal') }}" 
-                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200">
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -187,7 +187,7 @@
                 </div>
             </div>
             <div class="flex space-x-3">
-                <button type="submit" class="bg-gradient-to-r from-pink-500 to-rose-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
+                <button type="submit" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
                     <i class="fas fa-filter mr-2"></i>Terapkan Filter
                 </button>
                 <a href="{{ route('admin.antrian') }}" class="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
@@ -203,7 +203,7 @@
         <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <h2 class="text-lg font-semibold text-gray-800 flex items-center mb-2 sm:mb-0">
-                    <i class="fas fa-list-ol mr-3 text-pink-600"></i>
+                    <i class="fas fa-list-ol mr-3 text-green-600"></i>
                     Daftar Antrian
                 </h2>
                 <div class="flex items-center space-x-4">
@@ -217,34 +217,34 @@
         <!-- Table Content -->
         <div class="overflow-x-auto">
             <table class="w-full">
-                <thead class="bg-gradient-to-r from-pink-50 to-rose-50">
+                <thead class="bg-gradient-to-r from-green-50 to-emerald-50">
                     <tr>
-                        <th class="px-4 py-4 text-left text-xs font-semibold text-pink-700 uppercase tracking-wider">
+                        <th class="px-4 py-4 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                             <div class="flex items-center">
                                 <i class="fas fa-hashtag mr-2"></i>No Antrian
                             </div>
                         </th>
-                        <th class="px-4 py-4 text-left text-xs font-semibold text-pink-700 uppercase tracking-wider">
+                        <th class="px-4 py-4 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                             <div class="flex items-center">
                                 <i class="fas fa-calendar mr-2"></i>Tanggal & Waktu
                             </div>
                         </th>
-                        <th class="px-4 py-4 text-left text-xs font-semibold text-pink-700 uppercase tracking-wider">
+                        <th class="px-4 py-4 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                             <div class="flex items-center">
                                 <i class="fas fa-user mr-2"></i>Data Tenaga Kerja
                             </div>
                         </th>
-                        <th class="px-4 py-4 text-left text-xs font-semibold text-pink-700 uppercase tracking-wider">
+                        <th class="px-4 py-4 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                             <div class="flex items-center">
                                 <i class="fas fa-users mr-2"></i>Ahli Waris
                             </div>
                         </th>
-                        <th class="px-4 py-4 text-left text-xs font-semibold text-pink-700 uppercase tracking-wider">
+                        <th class="px-4 py-4 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                             <div class="flex items-center">
                                 <i class="fas fa-phone mr-2"></i>Kontak
                             </div>
                         </th>
-                        <th class="px-4 py-4 text-left text-xs font-semibold text-pink-700 uppercase tracking-wider">
+                        <th class="px-4 py-4 text-left text-xs font-semibold text-green-700 uppercase tracking-wider">
                             <div class="flex items-center">
                                 <i class="fas fa-cog mr-2"></i>Aksi
                             </div>
@@ -253,12 +253,12 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @forelse($antrian as $item)
-                    <tr class="hover:bg-gradient-to-r hover:from-pink-50/50 hover:to-rose-50/50 transition-all duration-200 group">
+                    <tr class="hover:bg-gradient-to-r hover:from-green-50/50 hover:to-emerald-50/50 transition-all duration-200 group">
                         <!-- No Antrian -->
                         <td class="px-4 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <span class="inline-flex items-center justify-center px-3 py-2 rounded-xl text-sm font-bold text-white shadow-sm
-                                    {{ $item->tanggal == now()->format('Y-m-d') ? 'bg-gradient-to-r from-red-500 to-pink-600' : 
+                                    {{ $item->tanggal == now()->format('Y-m-d') ? 'bg-gradient-to-r from-red-500 to-rose-600' : 
                                        ($item->tanggal == now()->addDay()->format('Y-m-d') ? 'bg-gradient-to-r from-green-500 to-emerald-600' : 
                                        'bg-gradient-to-r from-blue-500 to-cyan-600') }}">
                                     #{{ $item->nomor }}

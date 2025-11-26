@@ -6,10 +6,10 @@
 @section('content')
 <div class="max-w-8xl mx-auto">
     <!-- Welcome Banner -->
-    <div class="bg-gradient-to-r from-pink-600 to-rose-700 rounded-2xl shadow-xl p-6 mb-8 text-white relative overflow-hidden">
+    <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-xl p-6 mb-8 text-white relative overflow-hidden">
         <div class="relative z-10">
             <h1 class="text-2xl font-bold mb-2">Selamat Datang, {{ Auth::user()->nama }}! 👋</h1>
-            <p class="text-pink-100 opacity-90">Pantau dan kelola sistem antrian JKM BPJS Ketenagakerjaan</p>
+            <p class="text-green-100 opacity-90">Pantau dan kelola sistem antrian JKM BPJS Ketenagakerjaan</p>
         </div>
         <div class="absolute right-4 top-1/2 transform -translate-y-1/2 opacity-20">
             <i class="fas fa-chart-line text-6xl"></i>
@@ -21,19 +21,19 @@
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-8">
         <!-- Today's Queue -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-pink-500 relative overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-green-500 relative overflow-hidden">
             <!-- Background Pattern -->
-            <div class="absolute top-0 right-0 w-20 h-20 bg-pink-50 rounded-full -mr-6 -mt-6"></div>
-            <div class="absolute bottom-0 left-0 w-12 h-12 bg-pink-100 rounded-full -ml-4 -mb-4"></div>
+            <div class="absolute top-0 right-0 w-20 h-20 bg-green-50 rounded-full -mr-6 -mt-6"></div>
+            <div class="absolute bottom-0 left-0 w-12 h-12 bg-green-100 rounded-full -ml-4 -mb-4"></div>
             
             <div class="flex items-center relative z-10">
-                <div class="p-3 rounded-xl bg-pink-50 text-pink-600 shadow-sm">
+                <div class="p-3 rounded-xl bg-green-50 text-green-600 shadow-sm">
                     <i class="fas fa-users text-xl"></i>
                 </div>
                 <div class="ml-4 flex-1">
                     <p class="text-sm font-medium text-gray-600 flex items-center">
                         <span>Antrian Hari Ini</span>
-                        <span class="ml-2 text-xs bg-pink-100 text-pink-800 px-1 py-1 rounded-lg">
+                        <span class="ml-2 text-xs bg-green-100 text-green-800 px-1 py-1 rounded-lg">
                             {{ \Carbon\Carbon::now()->translatedFormat('d M') }}
                         </span>
                     </p>
@@ -44,7 +44,7 @@
                         </span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
-                        <div class="bg-gradient-to-r from-pink-500 to-pink-600 h-2 rounded-full transition-all duration-500" 
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full transition-all duration-500" 
                             style="width: {{ ($stats['today']/15)*100 }}%"></div>
                     </div>
                     <div class="flex justify-between text-xs text-gray-500">
@@ -149,13 +149,13 @@
         </div>
 
         <!-- Weekly Stats -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-green-500 relative overflow-hidden">
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-pink-500 relative overflow-hidden">
             <!-- Background Pattern -->
-            <div class="absolute top-0 right-0 w-20 h-20 bg-green-50 rounded-full -mr-6 -mt-6"></div>
-            <div class="absolute bottom-0 left-0 w-12 h-12 bg-green-100 rounded-full -ml-4 -mb-4"></div>
+            <div class="absolute top-0 right-0 w-20 h-20 bg-pink-50 rounded-full -mr-6 -mt-6"></div>
+            <div class="absolute bottom-0 left-0 w-12 h-12 bg-pink-100 rounded-full -ml-4 -mb-4"></div>
             
             <div class="flex items-center relative z-10">
-                <div class="p-3 rounded-xl bg-green-50 text-green-600 shadow-sm">
+                <div class="p-3 rounded-xl bg-pink-50 text-pink-600 shadow-sm">
                     <i class="fas fa-chart-line text-xl"></i>
                 </div>
                 <div class="ml-4 flex-1">
@@ -163,8 +163,8 @@
                     <div class="flex items-baseline justify-between mb-2 mt-2">
                         <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['this_week']) }}</p>
                         <div class="flex items-center space-x-1">
-                            <i class="fas {{ $stats['this_week'] > $stats['last_week_total'] ? 'fa-arrow-up text-green-500' : 'fa-arrow-down text-red-500' }} text-xs"></i>
-                            <span class="text-xs font-medium {{ $stats['this_week'] > $stats['last_week_total'] ? 'text-green-600' : 'text-red-600' }}">
+                            <i class="fas {{ $stats['this_week'] > $stats['last_week_total'] ? 'fa-arrow-up text-pink-500' : 'fa-arrow-down text-red-500' }} text-xs"></i>
+                            <span class="text-xs font-medium {{ $stats['this_week'] > $stats['last_week_total'] ? 'text-pink-600' : 'text-red-600' }}">
                                 @if($stats['last_week_total'] > 0)
                                     {{ number_format((($stats['this_week'] - $stats['last_week_total']) / $stats['last_week_total']) * 100, 1) }}%
                                 @else
@@ -181,7 +181,7 @@
                             <span>{{ \Carbon\Carbon::now()->dayOfWeek }}/7 hari</span>
                         </div>
                         <div class="w-full bg-gray-200 rounded-full h-1">
-                            <div class="bg-gradient-to-r from-green-500 to-green-600 h-1 rounded-full" 
+                            <div class="bg-gradient-to-r from-pink-500 to-pink-600 h-1 rounded-full" 
                                 style="width: {{ (\Carbon\Carbon::now()->dayOfWeek / 7) * 100 }}%"></div>
                         </div>
                     </div>
@@ -190,7 +190,7 @@
             
             <!-- Week Indicator -->
             <div class="absolute top-4 right-4">
-                <span class="text-xs font-medium bg-green-100 text-green-800 px-1 py-1 rounded-lg">
+                <span class="text-xs font-medium bg-pink-100 text-pink-800 px-1 py-1 rounded-lg">
                     W{{ \Carbon\Carbon::now()->week }}
                 </span>
             </div>
@@ -204,10 +204,10 @@
             <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
                 <div class="flex items-center justify-between">
                     <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                        <i class="fas fa-list-ol mr-3 text-pink-600"></i>
+                        <i class="fas fa-list-ol mr-3 text-green-600"></i>
                         <span>Antrian Hari Ini</span>
                     </h2>
-                    <span class="bg-pink-100 text-pink-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                         {{ $antrianHariIni->count() }} antrian
                     </span>
                 </div>
@@ -219,10 +219,10 @@
                         <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-200 group">
                             <div class="flex items-center space-x-4">
                                 <div class="relative">
-                                    <span class="bg-pink-600 text-white px-3 py-2 rounded-xl text-sm font-bold min-w-12 text-center block">
+                                    <span class="bg-green-600 text-white px-3 py-2 rounded-xl text-sm font-bold min-w-12 text-center block">
                                         #{{ $antrian->nomor }}
                                     </span>
-                                    <div class="absolute -top-1 -right-1 w-3 h-3 bg-pink-300 rounded-full animate-pulse"></div>
+                                    <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-300 rounded-full animate-pulse"></div>
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <p class="font-semibold text-gray-900 truncate">{{ $antrian->nama_tk }}</p>
@@ -234,7 +234,7 @@
                             </div>
                             <a href="{{ route('admin.antrian.show', $antrian->id) }}" 
                                class="opacity-0 group-hover:opacity-100 bg-white p-2 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 transform hover:scale-110">
-                                <i class="fas fa-eye text-pink-600"></i>
+                                <i class="fas fa-eye text-green-600"></i>
                             </a>
                         </div>
                         @endforeach
@@ -306,14 +306,14 @@
         <a href="{{ route('admin.antrian') }}" 
            class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 group">
             <div class="flex items-center">
-                <div class="p-3 rounded-xl bg-pink-50 text-pink-600 group-hover:bg-pink-100 transition-colors duration-200">
+                <div class="p-3 rounded-xl bg-green-50 text-green-600 group-hover:bg-green-100 transition-colors duration-200">
                     <i class="fas fa-list text-xl"></i>
                 </div>
                 <div class="ml-4">
-                    <h3 class="font-semibold text-gray-800 group-hover:text-pink-600 transition-colors duration-200">Lihat Semua Antrian</h3>
+                    <h3 class="font-semibold text-gray-800 group-hover:text-green-600 transition-colors duration-200">Lihat Semua Antrian</h3>
                     <p class="text-sm text-gray-600 mt-1">Kelola data antrian lengkap</p>
                 </div>
-                <i class="fas fa-chevron-right text-gray-400 ml-auto group-hover:text-pink-600 transform group-hover:translate-x-1 transition-all duration-200"></i>
+                <i class="fas fa-chevron-right text-gray-400 ml-auto group-hover:text-green-600 transform group-hover:translate-x-1 transition-all duration-200"></i>
             </div>
         </a>
 
@@ -334,22 +334,22 @@
         <a href="{{ route('admin.export.form') }}" 
            class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 group">
             <div class="flex items-center">
-                <div class="p-3 rounded-xl bg-rose-50 text-rose-600 group-hover:bg-rose-100 transition-colors duration-200">
+                <div class="p-3 rounded-xl bg-pink-50 text-pink-600 group-hover:bg-pink-100 transition-colors duration-200">
                     <i class="fas fa-file-export text-xl"></i>
                 </div>
                 <div class="ml-4">
-                    <h3 class="font-semibold text-gray-800 group-hover:text-rose-600 transition-colors duration-200">Export Data</h3>
+                    <h3 class="font-semibold text-gray-800 group-hover:text-pink-600 transition-colors duration-200">Export Data</h3>
                     <p class="text-sm text-gray-600 mt-1">Download data dalam format CSV</p>
                 </div>
-                <i class="fas fa-chevron-right text-gray-400 ml-auto group-hover:text-rose-600 transform group-hover:translate-x-1 transition-all duration-200"></i>
+                <i class="fas fa-chevron-right text-gray-400 ml-auto group-hover:text-pink-600 transform group-hover:translate-x-1 transition-all duration-200"></i>
             </div>
         </a>
     </div>
 
     <!-- Auto Refresh Indicator -->
     <div class="mt-8 text-center">
-        <div class="inline-flex items-center px-4 py-2 bg-pink-50 text-pink-700 rounded-full text-sm">
-            <div class="w-2 h-2 bg-pink-600 rounded-full mr-2 animate-pulse"></div>
+        <div class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm">
+            <div class="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse"></div>
             Auto refresh setiap 30 detik
         </div>
     </div>

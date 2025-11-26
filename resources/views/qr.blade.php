@@ -23,10 +23,10 @@
     <div class="max-w-3xl mx-auto py-10 px-4">
 
         <!-- Header Public -->
-        <div class="bg-gradient-to-r from-pink-600 to-rose-700 rounded-2xl shadow-xl p-6 mb-8 text-white relative overflow-hidden">
+        <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-xl p-6 mb-8 text-white relative overflow-hidden">
             <div class="relative z-10">
                 <h1 class="text-2xl font-bold mb-2">Antrian Jaminan Kematian (JKM)</h1>
-                <p class="text-pink-100 opacity-90">Silakan scan QR Code untuk mengambil antrian</p>
+                <p class="text-green-100 opacity-90">Silakan scan QR Code untuk mengambil antrian</p>
             </div>
 
             <div class="absolute right-4 top-1/2 transform -translate-y-1/2 opacity-20">
@@ -44,23 +44,23 @@
                 <p class="text-gray-600 text-sm">Scan menggunakan kamera smartphone Anda</p>
             </div>
 
-            <div class="bg-gradient-to-br from-gray-50 to-pink-50 rounded-2xl p-6 border border-pink-100 relative overflow-hidden">
+            <div class="bg-gradient-to-br from-gray-50 to-green-50 rounded-2xl p-6 border border-green-100 relative overflow-hidden">
                 <!-- Background Shape -->
-                <div class="absolute top-0 right-0 w-20 h-20 bg-pink-50 rounded-full -mr-6 -mt-6"></div>
-                <div class="absolute bottom-0 left-0 w-12 h-12 bg-pink-100 rounded-full -ml-4 -mb-4"></div>
+                <div class="absolute top-0 right-0 w-20 h-20 bg-green-50 rounded-full -mr-6 -mt-6"></div>
+                <div class="absolute bottom-0 left-0 w-12 h-12 bg-green-100 rounded-full -ml-4 -mb-4"></div>
 
                 <div class="max-w-xs mx-auto relative z-10">
                     <div class="relative group flex justify-center items-center">
                         {!! $qr !!}
-                        <div class="absolute inset-0 bg-pink-500 bg-opacity-0 group-hover:bg-opacity-10 rounded-xl transition-all duration-300 flex items-center justify-center">
+                        <div class="absolute inset-0 bg-green-500 bg-opacity-0 group-hover:bg-opacity-10 rounded-xl transition-all duration-300 flex items-center justify-center">
                             <div class="opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-300 bg-white bg-opacity-90 p-3 rounded-full shadow-lg">
-                                <i class="fas fa-expand text-pink-600 text-lg"></i>
+                                <i class="fas fa-expand text-green-600 text-lg"></i>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <p class="text-pink-600 text-sm mt-4 flex items-center justify-center">
+                <p class="text-green-600 text-sm mt-4 flex items-center justify-center">
                     <i class="fas fa-mobile-alt mr-2"></i>
                     Scan untuk memulai pendaftaran
                 </p>
@@ -70,7 +70,7 @@
         <!-- Instructions Section -->
         <div class="bg-white rounded-2xl shadow-lg p-6 card-hover">
             <div class="flex items-center mb-6">
-                <div class="p-3 rounded-xl bg-pink-50 text-pink-600 mr-4">
+                <div class="p-3 rounded-xl bg-green-50 text-green-600 mr-4">
                     <i class="fas fa-info-circle text-xl"></i>
                 </div>
                 <div>
@@ -82,7 +82,7 @@
             <div class="space-y-4">
 
                 <div class="flex items-start space-x-4 p-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl border border-amber-200">
-                    <div class="flex-shrink-0 w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
+                    <div class="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
                         <span class="text-white font-bold text-sm">1</span>
                     </div>
                     <div>
@@ -102,7 +102,7 @@
                 </div>
 
                 <div class="flex items-start space-x-4 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl border border-blue-200">
-                    <div class="flex-shrink-0 w-8 h-8 bg-rose-500 rounded-full flex items-center justify-center">
+                    <div class="flex-shrink-0 w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
                         <span class="text-white font-bold text-sm">3</span>
                     </div>
                     <div>

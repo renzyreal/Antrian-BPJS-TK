@@ -197,14 +197,14 @@
 
     <div class="w-full desktop-max-width tablet-max-width">
         <!-- Header Card -->
-        <div class="bg-gradient-to-br from-pink-500 to-rose-600 text-white rounded-t-xl sm:rounded-t-2xl shadow-lg p-4 sm:p-6 text-center">
+        <div class="bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-t-xl sm:rounded-t-2xl shadow-lg p-4 sm:p-6 text-center">
             <div class="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <div class="bg-white/20 p-2 sm:p-3 rounded-full">
                     <i class="fas fa-clipboard-list text-lg sm:text-xl"></i>
                 </div>
                 <div>
                     <h1 class="text-xl sm:text-2xl md:text-3xl font-bold">Form Antrian JKM</h1>
-                    <p class="text-pink-100 text-xs sm:text-sm md:text-base">BPJS Ketenagakerjaan</p>
+                    <p class="text-green-100 text-xs sm:text-sm md:text-base">BPJS Ketenagakerjaan</p>
                 </div>
             </div>
         </div>
@@ -263,7 +263,7 @@
                     <!-- NAMA -->
                     <div class="mb-4 sm:mb-6">
                         <label class="block mb-2 font-semibold text-gray-700 mobile-text sm:text-base">
-                            <i class="fas fa-user mr-2 text-pink-500"></i>Nama Tenaga Kerja <span class="text-red-500">*</span>
+                            <i class="fas fa-user mr-2 text-green-500"></i>Nama Tenaga Kerja <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="nama_tk" id="nama_tk" 
                                class="w-full border border-gray-300 p-3 rounded-lg input-focus transition duration-200 mobile-text sm:text-base" 
@@ -286,7 +286,7 @@
                     <!-- NIK -->
                     <div class="mb-4 sm:mb-6">
                         <label class="block mb-2 font-semibold text-gray-700 mobile-text sm:text-base">
-                            <i class="fas fa-id-card mr-2 text-pink-500"></i>NIK Tenaga Kerja <span class="text-red-500">*</span>
+                            <i class="fas fa-id-card mr-2 text-green-500"></i>NIK Tenaga Kerja <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="nik_tk" id="nik_tk" 
                                class="w-full border border-gray-300 p-3 rounded-lg input-focus transition duration-200 mobile-text sm:text-base" 
@@ -315,7 +315,7 @@
                     <!-- AHLI WARIS -->
                     <div class="mb-4 sm:mb-6">
                         <label class="block mb-2 font-semibold text-gray-700 mobile-text sm:text-base">
-                            <i class="fas fa-users mr-2 text-pink-500"></i>Nama Ahli Waris <span class="text-red-500">*</span>
+                            <i class="fas fa-users mr-2 text-green-500"></i>Nama Ahli Waris <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="ahli_waris" id="ahli_waris" 
                                class="w-full border border-gray-300 p-3 rounded-lg input-focus transition duration-200 mobile-text sm:text-base" 
@@ -398,11 +398,11 @@
                     <!-- FOTO KTP -->
                     <div class="mb-4 sm:mb-6">
                         <label class="block mb-2 font-semibold text-gray-700 mobile-text sm:text-base">
-                            <i class="fas fa-id-card mr-2 text-pink-500"></i>Upload Foto KTP Ahli Waris <span class="text-red-500">*</span>
+                            <i class="fas fa-id-card mr-2 text-green-500"></i>Upload Foto KTP Ahli Waris <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
                             <input type="file" name="foto_ktp_aw" accept="image/*" 
-                                   class="w-full border border-gray-300 p-3 rounded-lg input-focus transition duration-200 file:mr-2 file:py-2 file:px-3 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 mobile-text sm:text-base" 
+                                   class="w-full border border-gray-300 p-3 rounded-lg input-focus transition duration-200 file:mr-2 file:py-2 file:px-3 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 mobile-text sm:text-base" 
                                    required onchange="validateFile(this, 'ktp')">
                         </div>
                         <small class="text-gray-500 mobile-text mt-1 flex items-center">
@@ -423,11 +423,11 @@
                     <!-- FOTO DIRI -->
                     <div class="mb-4 sm:mb-6">
                         <label class="block mb-2 font-semibold text-gray-700 mobile-text sm:text-base">
-                            <i class="fas fa-camera mr-2 text-pink-500"></i>Upload Foto Diri Ahli Waris <span class="text-red-500">*</span>
+                            <i class="fas fa-camera mr-2 text-green-500"></i>Upload Foto Diri Ahli Waris <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
                             <input type="file" name="foto_diri_aw" accept="image/*" 
-                                   class="w-full border border-gray-300 p-3 rounded-lg input-focus transition duration-200 file:mr-2 file:py-2 file:px-3 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 mobile-text sm:text-base" 
+                                   class="w-full border border-gray-300 p-3 rounded-lg input-focus transition duration-200 file:mr-2 file:py-2 file:px-3 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 mobile-text sm:text-base" 
                                    required onchange="validateFile(this, 'diri')">
                         </div>
                         <small class="text-gray-500 mobile-text mt-1 flex items-center">
@@ -448,7 +448,7 @@
                     <!-- TANGGAL -->
                     <div class="mb-4 sm:mb-6">
                         <label class="block mb-2 font-semibold text-gray-700 mobile-text sm:text-base">
-                            <i class="fas fa-calendar-alt mr-2 text-pink-500"></i>Tanggal Antrian <span class="text-red-500">*</span>
+                            <i class="fas fa-calendar-alt mr-2 text-green-500"></i>Tanggal Antrian <span class="text-red-500">*</span>
                         </label>
 
                         <input type="text" name="tanggal" id="tanggal"

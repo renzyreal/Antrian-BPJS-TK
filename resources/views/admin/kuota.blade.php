@@ -6,17 +6,17 @@
 @section('content')
 <div class="max-w-8xl mx-auto">
     <!-- Header Banner -->
-    <div class="bg-gradient-to-r from-pink-600 to-rose-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
+    <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
         <div class="relative z-10">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h1 class="text-2xl font-bold mb-2">Monitoring Kuota Antrian</h1>
-                    <p class="text-pink-100 opacity-90">Pantau ketersediaan kuota per blok waktu</p>
+                    <p class="text-green-100 opacity-90">Pantau ketersediaan kuota per blok waktu</p>
                 </div>
                 <div class="mt-4 lg:mt-0">
                     <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
                         <p class="text-sm font-medium">{{ \Carbon\Carbon::parse($tanggal)->translatedFormat('l, j F Y') }}</p>
-                        <p class="text-xs text-pink-100">Tanggal dipantau</p>
+                        <p class="text-xs text-green-100">Tanggal dipantau</p>
                     </div>
                 </div>
             </div>
@@ -33,14 +33,14 @@
         <form action="{{ route('admin.kuota') }}" method="GET" class="flex flex-col lg:flex-row lg:items-end gap-4">
             <div class="flex-1">
                 <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                    <i class="fas fa-calendar-day mr-2 text-pink-500"></i>
+                    <i class="fas fa-calendar-day mr-2 text-green-500"></i>
                     Pilih Tanggal Monitoring
                 </label>
                 <input type="date" name="tanggal" value="{{ $tanggal }}" 
-                       class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200">
+                       class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200">
             </div>
             <div class="flex space-x-3">
-                <button type="submit" class="bg-gradient-to-r from-pink-500 to-rose-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
+                <button type="submit" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
                     <i class="fas fa-filter mr-2"></i>Terapkan
                 </button>
                 <a href="{{ route('admin.kuota') }}" class="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
@@ -222,7 +222,7 @@
                         <div class="w-full bg-gray-200 rounded-full h-2">
                             <div class="h-2 rounded-full transition-all duration-500
                                 {{ $block['persentase'] < 70 ? 'bg-gradient-to-r from-green-500 to-emerald-600' : 
-                                   ($block['persentase'] < 90 ? 'bg-gradient-to-r from-yellow-500 to-amber-600' : 'bg-gradient-to-r from-red-500 to-rose-600') }}" 
+                                   ($block['persentase'] < 90 ? 'bg-gradient-to-r from-yellow-500 to-amber-600' : 'bg-gradient-to-r from-red-500 to-emerald-600') }}" 
                                  style="width: {{ $block['persentase'] }}%">
                             </div>
                         </div>
@@ -251,13 +251,13 @@
         <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <h2 class="text-lg font-semibold text-gray-800 flex items-center mb-2 sm:mb-0">
-                    <i class="fas fa-list-ol mr-3 text-rose-600"></i>
+                    <i class="fas fa-list-ol mr-3 text-emerald-600"></i>
                     Daftar Antrian
                     <span class="ml-2 text-sm font-normal text-gray-600">
                         {{ \Carbon\Carbon::parse($tanggal)->translatedFormat('j F Y') }}
                     </span>
                 </h2>
-                <span class="bg-rose-100 text-rose-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                <span class="bg-emerald-100 text-emerald-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
                     {{ $antrian->count() }} antrian
                 </span>
             </div>
@@ -268,7 +268,7 @@
                     @foreach($antrian as $item)
                     <div class="border border-gray-200 rounded-xl p-4 bg-gradient-to-br from-gray-50 to-white hover:shadow-md transition-all duration-200 group">
                         <div class="flex justify-between items-start mb-3">
-                            <span class="bg-gradient-to-r from-pink-500 to-rose-600 text-white px-3 py-1 rounded-lg text-sm font-bold shadow-sm">
+                            <span class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1 rounded-lg text-sm font-bold shadow-sm">
                                 No. {{ $item->nomor }}
                             </span>
                             <span class="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded-lg">
@@ -305,8 +305,8 @@
 
     <!-- Auto Refresh Indicator -->
     <div class="mt-8 text-center">
-        <div class="inline-flex items-center px-4 py-2 bg-pink-50 text-pink-700 rounded-full text-sm">
-            <div class="w-2 h-2 bg-pink-600 rounded-full mr-2 animate-pulse"></div>
+        <div class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm">
+            <div class="w-2 h-2 bg-green-600 rounded-full mr-2 animate-pulse"></div>
             Auto refresh setiap 60 detik
         </div>
     </div>

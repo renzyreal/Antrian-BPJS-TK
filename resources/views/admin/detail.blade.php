@@ -6,12 +6,12 @@
 @section('content')
 <div class="max-w-8xl mx-auto">
     <!-- Header Info -->
-    <div class="bg-gradient-to-r from-pink-600 to-rose-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
+    <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
         <div class="relative z-10">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h1 class="text-2xl font-bold mb-2">Detail Antrian #{{ $antrian->nomor }}</h1>
-                    <p class="text-pink-100 opacity-90">Informasi lengkap data antrian peserta</p>
+                    <p class="text-green-100 opacity-90">Informasi lengkap data antrian peserta</p>
                 </div>
                 <div class="mt-4 lg:mt-0">
                     <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
@@ -32,14 +32,14 @@
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
                 <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
                     <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                        <i class="fas fa-info-circle mr-3 text-pink-600"></i>
+                        <i class="fas fa-info-circle mr-3 text-green-600"></i>
                         Informasi Antrian
                     </h2>
                 </div>
                 <div class="p-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="text-center p-6 bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl border-l-4 border-pink-500">
-                            <div class="text-4xl font-bold text-pink-600 mb-2">{{ $antrian->nomor }}</div>
+                        <div class="text-center p-6 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border-l-4 border-green-500">
+                            <div class="text-4xl font-bold text-green-600 mb-2">{{ $antrian->nomor }}</div>
                             <div class="text-sm font-semibold text-gray-700">Nomor Antrian</div>
                             <div class="text-xs text-gray-500 mt-1">Urutan pelayanan</div>
                         </div>
@@ -251,7 +251,7 @@
     <div class="bg-white rounded-2xl shadow-lg overflow-hidden mt-6 card-hover">
         <div class="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
             <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                <i class="fas fa-file-alt mr-3 text-rose-600"></i>
+                <i class="fas fa-file-alt mr-3 text-emerald-600"></i>
                 Dokumen Pendukung
             </h2>
         </div>

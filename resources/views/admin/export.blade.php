@@ -6,12 +6,12 @@
 @section('content')
 <div class="max-w-8xl mx-auto">
     <!-- Header Banner -->
-    <div class="bg-gradient-to-r from-pink-600 to-rose-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
+    <div class="bg-gradient-to-r from-green-600 to-emerald-700 rounded-2xl shadow-xl p-6 mb-6 text-white relative overflow-hidden">
         <div class="relative z-10">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <h1 class="text-2xl font-bold mb-2">Export Data Antrian</h1>
-                    <p class="text-pink-100 opacity-90">Download data antrian dalam format Excel untuk analisis dan backup</p>
+                    <p class="text-green-100 opacity-90">Download data antrian dalam format Excel untuk analisis dan backup</p>
                 </div>
                 <div class="mt-4 lg:mt-0">
                     <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
@@ -50,7 +50,7 @@
                                 Tanggal Mulai
                             </label>
                             <input type="date" name="start_date" 
-                                   class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200"
+                                   class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
                                    value="{{ request('start_date') }}">
                         </div>
                         <div>
@@ -79,11 +79,11 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
-                            <i class="fas fa-calendar-alt mr-2 text-rose-500"></i>
+                            <i class="fas fa-calendar-alt mr-2 text-emerald-500"></i>
                             Tanggal Tertentu
                         </label>
                         <input type="date" name="tanggal" 
-                               class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all duration-200"
+                               class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200"
                                value="{{ request('tanggal') }}">
                     </div>
                 </div>
@@ -153,18 +153,18 @@
 
                 <!-- Last 7 Days -->
                 <a href="{{ route('admin.export.download') }}?filter=week" 
-                   class="group bg-gradient-to-br from-green-50 to-green-100 border-l-4 border-green-500 rounded-xl p-5 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 block">
+                   class="group bg-gradient-to-br from-pink-50 to-pink-100 border-l-4 border-pink-500 rounded-xl p-5 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 block">
                     <div class="flex items-start justify-between mb-3">
-                        <div class="p-3 rounded-xl bg-green-500 text-white group-hover:scale-110 transition-transform duration-200">
+                        <div class="p-3 rounded-xl bg-pink-500 text-white group-hover:scale-110 transition-transform duration-200">
                             <i class="fas fa-calendar-week text-lg"></i>
                         </div>
-                        <span class="text-xs font-medium bg-green-200 text-green-800 px-2 py-1 rounded-full">
+                        <span class="text-xs font-medium bg-pink-200 text-pink-800 px-2 py-1 rounded-full">
                             7 Days
                         </span>
                     </div>
                     <h3 class="font-semibold text-gray-800 text-lg mb-2">7 Hari Terakhir</h3>
                     <p class="text-sm text-gray-600">Export data seminggu terakhir</p>
-                    <div class="mt-3 flex items-center text-xs text-green-600 font-medium">
+                    <div class="mt-3 flex items-center text-xs text-pink-600 font-medium">
                         <span>Minggu ini</span>
                         <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-200"></i>
                     </div>
@@ -191,18 +191,18 @@
 
                 <!-- Tomorrow -->
                 <a href="{{ route('admin.export.download') }}?filter=tomorrow" 
-                   class="group bg-gradient-to-br from-pink-50 to-pink-100 border-l-4 border-pink-500 rounded-xl p-5 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 block">
+                   class="group bg-gradient-to-br from-green-50 to-green-100 border-l-4 border-green-500 rounded-xl p-5 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 block">
                     <div class="flex items-start justify-between mb-3">
-                        <div class="p-3 rounded-xl bg-pink-500 text-white group-hover:scale-110 transition-transform duration-200">
+                        <div class="p-3 rounded-xl bg-green-500 text-white group-hover:scale-110 transition-transform duration-200">
                             <i class="fas fa-calendar-alt text-lg"></i>
                         </div>
-                        <span class="text-xs font-medium bg-pink-200 text-pink-800 px-2 py-1 rounded-full">
+                        <span class="text-xs font-medium bg-green-200 text-green-800 px-2 py-1 rounded-full">
                             Upcoming
                         </span>
                     </div>
                     <h3 class="font-semibold text-gray-800 text-lg mb-2">Besok</h3>
                     <p class="text-sm text-gray-600">Export data antrian besok</p>
-                    <div class="mt-3 flex items-center text-xs text-pink-600 font-medium">
+                    <div class="mt-3 flex items-center text-xs text-green-600 font-medium">
                         <span>{{ \Carbon\Carbon::tomorrow()->translatedFormat('d M Y') }}</span>
                         <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-200"></i>
                     </div>

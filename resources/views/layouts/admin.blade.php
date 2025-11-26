@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin - Antrian JKM')</title>
+    <link rel="icon" href="{{ asset('assets/icon-bpjstk.png') }}" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -24,7 +25,7 @@
             bottom: 0;
             left: 0;
             height: 3px;
-            background: linear-gradient(90deg, #f6339a);
+            background: linear-gradient(90deg, #53ec53);
             transition: all 0.3s ease;
             border-radius: 3px 3px 0 0;
         }
@@ -85,7 +86,7 @@
 <body class="bg-gray-50">
     <div class="min-h-screen flex flex-col">
         <!-- Header -->
-        <header class="bg-gradient-to-br from-pink-500 to-rose-600 text-white shadow-xl">
+        <header class="bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-xl">
             <div class="container mx-auto px-4 py-4">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center space-x-4">
@@ -96,7 +97,7 @@
                             <h1 class="text-xl md:text-2xl font-bold">
                                 @yield('header-title', 'Admin Dashboard')
                             </h1>
-                            <p class="text-pink-100 text-xs md:text-sm">Sistem Antrian JKM BPJS Ketenagakerjaan</p>
+                            <p class="text-green-100 text-xs md:text-sm">Sistem Antrian JKM BPJS Ketenagakerjaan</p>
                         </div>
                     </div>
 
@@ -112,7 +113,7 @@
                             <div class="text-sm">
                                 <div class="hidden lg:block">{{ \Carbon\Carbon::now()->translatedFormat('l, j F Y') }}</div>
                                 <div class="lg:hidden">{{ \Carbon\Carbon::now()->translatedFormat('j F Y') }}</div>
-                                <div class="font-mono text-pink-100" id="live-clock">{{ \Carbon\Carbon::now()->format('H:i:s') }} WITA</div>
+                                <div class="font-mono text-green-100" id="live-clock">{{ \Carbon\Carbon::now()->format('H:i:s') }} WITA</div>
                             </div>
                         </div>
 
@@ -131,8 +132,8 @@
                             <div id="profile-menu" 
                                 class="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-xl shadow-xl hidden z-50 overflow-hidden border border-gray-200">
                                 <a href="{{ route('admin.profil.edit') }}" 
-                                class="flex items-center px-4 py-3 hover:bg-pink-50 transition-colors duration-200 border-b border-gray-100">
-                                    <i class="fas fa-edit mr-3 text-pink-500"></i> 
+                                class="flex items-center px-4 py-3 hover:bg-green-50 transition-colors duration-200 border-b border-gray-100">
+                                    <i class="fas fa-edit mr-3 text-green-500"></i> 
                                     <span>Edit Profil</span>
                                 </a>
 
@@ -167,7 +168,7 @@
             <div class="p-4">
                 <!-- Mobile Profile Info -->
                 <div class="flex items-center space-x-3 mb-6 p-3 bg-gray-50 rounded-lg">
-                    <div class="w-10 h-10 bg-gradient-to-r from-pink-500 to-pink-600 rounded-full flex items-center justify-center text-white">
+                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white">
                         <i class="fas fa-user"></i>
                     </div>
                     <div>
@@ -179,32 +180,38 @@
                 <!-- Mobile Navigation -->
                 <div class="space-y-2">
                     <a href="{{ route('admin.dashboard') }}" 
-                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-pink-50 text-pink-600' : 'text-gray-700 hover:bg-gray-100' }}">
+                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-green-50 text-green-600' : 'text-gray-700 hover:bg-gray-100' }}">
                         <i class="fas fa-home mr-3 w-5 text-center"></i>
                         <span>Dashboard</span>
                     </a>
                     
                     <a href="{{ route('admin.antrian') }}" 
-                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.antrian*') ? 'bg-pink-50 text-pink-600' : 'text-gray-700 hover:bg-gray-100' }}">
+                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.antrian*') ? 'bg-green-50 text-green-600' : 'text-gray-700 hover:bg-gray-100' }}">
                         <i class="fas fa-list mr-3 w-5 text-center"></i>
                         <span>Data Antrian</span>
                     </a>
                     
                     <a href="{{ route('admin.kuota') }}" 
-                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.kuota') ? 'bg-pink-50 text-pink-600' : 'text-gray-700 hover:bg-gray-100' }}">
+                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.kuota') ? 'bg-green-50 text-green-600' : 'text-gray-700 hover:bg-gray-100' }}">
                         <i class="fas fa-chart-bar mr-3 w-5 text-center"></i>
                         <span>Kuota</span>
                     </a>
+
+                    <a href="{{ route('admin.tanggal.index') }}" 
+                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.tanggal.index') ? 'bg-green-50 text-green-600' : 'text-gray-700 hover:bg-gray-100' }}">
+                        <i class="fas fa-calendar mr-3 w-5 text-center"></i>
+                        <span>Set Tanggal</span>
+                    </a>
                     
                     <a href="{{ route('admin.export.form') }}" 
-                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.export*') ? 'bg-pink-50 text-pink-600' : 'text-gray-700 hover:bg-gray-100' }}">
+                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.export*') ? 'bg-green-50 text-green-600' : 'text-gray-700 hover:bg-gray-100' }}">
                         <i class="fas fa-download mr-3 w-5 text-center"></i>
                         <span>Export Data</span>
                     </a>
 
                     <!-- QR Code Mobile Menu -->
                     <a href="{{ route('admin.qr') }}" 
-                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.qr*') ? 'bg-pink-50 text-pink-600' : 'text-gray-700 hover:bg-gray-100' }}">
+                       class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.qr*') ? 'bg-green-50 text-green-600' : 'text-gray-700 hover:bg-gray-100' }}">
                         <i class="fas fa-qrcode mr-3 w-5 text-center"></i>
                         <span>QR Code</span>
                     </a>
@@ -226,7 +233,7 @@
                 <div class="mt-6 space-y-2">
                     <a href="{{ route('admin.profil.edit') }}" 
                        class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100">
-                        <i class="fas fa-edit mr-3 w-5 text-center text-pink-500"></i>
+                        <i class="fas fa-edit mr-3 w-5 text-center text-green-500"></i>
                         <span>Edit Profil</span>
                     </a>
                     
@@ -246,35 +253,35 @@
             <div class="container mx-auto px-4">
                 <div class="flex space-x-1 py-1 relative custom-scrollbar overflow-x-auto">
                     <a href="{{ route('admin.dashboard') }}" 
-                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.dashboard') ? 'text-pink-600 font-semibold bg-pink-50' : 'text-gray-600 hover:text-pink-600 hover:bg-gray-50' }}">
+                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.dashboard') ? 'text-green-600 font-semibold bg-green-50' : 'text-gray-600 hover:text-green-600 hover:bg-gray-50' }}">
                         <i class="fas fa-home mr-2"></i>Dashboard
                         @if(request()->routeIs('admin.dashboard'))
                             <div class="nav-indicator w-full"></div>
                         @endif
                     </a>
                     <a href="{{ route('admin.antrian') }}" 
-                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.antrian*') ? 'text-pink-600 font-semibold bg-pink-50' : 'text-gray-600 hover:text-pink-600 hover:bg-gray-50' }}">
+                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.antrian*') ? 'text-green-600 font-semibold bg-green-50' : 'text-gray-600 hover:text-green-600 hover:bg-gray-50' }}">
                         <i class="fas fa-list mr-2"></i>Data Antrian
                         @if(request()->routeIs('admin.antrian*'))
                             <div class="nav-indicator w-full"></div>
                         @endif
                     </a>
                     <a href="{{ route('admin.kuota') }}" 
-                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.kuota') ? 'text-pink-600 font-semibold bg-pink-50' : 'text-gray-600 hover:text-pink-600 hover:bg-gray-50' }}">
+                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.kuota') ? 'text-green-600 font-semibold bg-green-50' : 'text-gray-600 hover:text-green-600 hover:bg-gray-50' }}">
                         <i class="fas fa-chart-bar mr-2"></i>Kuota
                         @if(request()->routeIs('admin.kuota'))
                             <div class="nav-indicator w-full"></div>
                         @endif
                     </a>
                     <a href="{{ route('admin.tanggal.index') }}" 
-                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.tanggal.index') ? 'text-pink-600 font-semibold bg-pink-50' : 'text-gray-600 hover:text-pink-600 hover:bg-gray-50' }}">
-                        <i class="fas fa-calendar mr-2"></i>Set Tanggal Libur
+                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.tanggal.index') ? 'text-green-600 font-semibold bg-green-50' : 'text-gray-600 hover:text-green-600 hover:bg-gray-50' }}">
+                        <i class="fas fa-calendar mr-2"></i>Set Tanggal
                         @if(request()->routeIs('admin.tanggal.index'))
                             <div class="nav-indicator w-full"></div>
                         @endif
                     </a>
                     <a href="{{ route('admin.export.form') }}" 
-                        class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.export*') ? 'text-pink-600 font-semibold bg-pink-50' : 'text-gray-600 hover:text-pink-600 hover:bg-gray-50' }}">
+                        class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.export*') ? 'text-green-600 font-semibold bg-green-50' : 'text-gray-600 hover:text-green-600 hover:bg-gray-50' }}">
                         <i class="fas fa-download mr-2"></i>Export Data
                         @if(request()->routeIs('admin.export*'))
                             <div class="nav-indicator w-full"></div>
@@ -282,7 +289,7 @@
                     </a>
                     <!-- QR Code Navigation -->
                     <a href="{{ route('admin.qr') }}" 
-                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.qr*') ? 'text-pink-600 font-semibold bg-pink-50' : 'text-gray-600 hover:text-pink-600 hover:bg-gray-50' }}">
+                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.qr*') ? 'text-green-600 font-semibold bg-green-50' : 'text-gray-600 hover:text-green-600 hover:bg-gray-50' }}">
                         <i class="fas fa-qrcode mr-2"></i>QR Code
                         @if(request()->routeIs('admin.qr*'))
                             <div class="nav-indicator w-full"></div>
@@ -297,13 +304,13 @@
             <!-- Flash Messages -->
             <div class="mb-6 space-y-4">
                 @if(session('success'))
-                    <div class="bg-pink-50 border-l-4 border-pink-500 p-4 rounded-lg shadow-sm">
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg shadow-sm">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <i class="fas fa-check-circle text-pink-500 text-xl"></i>
+                                <i class="fas fa-check-circle text-green-500 text-xl"></i>
                             </div>
                             <div class="ml-3">
-                                <p class="text-pink-700 font-medium">{{ session('success') }}</p>
+                                <p class="text-green-700 font-medium">{{ session('success') }}</p>
                             </div>
                         </div>
                     </div>

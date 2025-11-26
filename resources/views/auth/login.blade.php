@@ -69,9 +69,9 @@
 <body class="min-h-screen flex items-center justify-center p-4">
     <!-- Background Elements -->
     <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute -top-20 -left-20 w-40 h-40 bg-pink-200 rounded-full opacity-20 floating-element"></div>
+        <div class="absolute -top-20 -left-20 w-40 h-40 bg-green-200 rounded-full opacity-20 floating-element"></div>
         <div class="absolute top-1/3 -right-16 w-32 h-32 bg-blue-200 rounded-full opacity-20 floating-element" style="animation-delay: 2s;"></div>
-        <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-rose-200 rounded-full opacity-20 floating-element" style="animation-delay: 4s;"></div>
+        <div class="absolute bottom-20 left-1/4 w-24 h-24 bg-emerald-200 rounded-full opacity-20 floating-element" style="animation-delay: 4s;"></div>
     </div>
 
     <div class="login-container w-full max-w-md rounded-2xl p-6 sm:p-8 relative z-10">
@@ -83,7 +83,7 @@
                     <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center shadow-lg">
                         <img src="{{ asset('assets/icon-jkm.png') }}" alt="JKM Icon" class="w-15 h-15">
                     </div>
-                    <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-pink-500 rounded-full flex items-center justify-center">
+                    <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                         <i class="fas fa-shield-alt text-white text-xs"></i>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                         <i class="fas fa-user text-gray-400"></i>
                     </div>
                     <input type="text" name="username" required
-                           class="w-full border border-gray-300 rounded-xl px-3 py-3 pl-10 input-focus transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500/20"
+                           class="w-full border border-gray-300 rounded-xl px-3 py-3 pl-10 input-focus transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/20"
                            placeholder="Masukkan username Anda">
                 </div>
             </div>
@@ -133,14 +133,14 @@
                         <i class="fas fa-lock text-gray-400"></i>
                     </div>
                     <input type="password" name="password" required
-                           class="w-full border border-gray-300 rounded-xl px-3 py-3 pl-10 input-focus transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-500/20"
+                           class="w-full border border-gray-300 rounded-xl px-3 py-3 pl-10 input-focus transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500/20"
                            placeholder="Masukkan password Anda">
                 </div>
             </div>
 
             <!-- Login Button -->
             <button type="submit"
-                class="w-full bg-gradient-to-br from-pink-500 to-rose-600 text-white font-semibold py-3 sm:py-3.5 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg flex items-center justify-center space-x-2">
+                class="w-full bg-gradient-to-br from-green-500 to-emerald-600 text-white font-semibold py-3 sm:py-3.5 rounded-xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg flex items-center justify-center space-x-2">
                 <i class="fas fa-sign-in-alt"></i>
                 <span>Masuk ke Sistem</span>
             </button>
@@ -167,7 +167,7 @@
     <!-- Loading Animation (hidden by default) -->
     <div id="loading" class="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center hidden z-50">
         <div class="text-center">
-            <div class="w-16 h-16 border-4 border-pink-200 border-t-pink-500 rounded-full animate-spin mx-auto mb-4"></div>
+            <div class="w-16 h-16 border-4 border-green-200 border-t-green-500 rounded-full animate-spin mx-auto mb-4"></div>
             <p class="text-gray-600 font-medium">Memproses login...</p>
         </div>
     </div>
@@ -188,11 +188,11 @@
         // Add input focus effects
         document.querySelectorAll('input').forEach(input => {
             input.addEventListener('focus', function() {
-                this.parentElement.classList.add('ring-2', 'ring-pink-500/20');
+                this.parentElement.classList.add('ring-2', 'ring-green-500/20');
             });
             
             input.addEventListener('blur', function() {
-                this.parentElement.classList.remove('ring-2', 'ring-pink-500/20');
+                this.parentElement.classList.remove('ring-2', 'ring-green-500/20');
             });
         });
 
