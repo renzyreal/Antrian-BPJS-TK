@@ -5,6 +5,8 @@ use App\Http\Controllers\AntrianController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\ProfilController;
+use App\Http\Controllers\Admin\TanggalNonaktifController;
+
 
 // Route default website - redirect ke dashboard jika sudah login, atau ke login jika belum
 Route::get('/', function () {
@@ -25,6 +27,15 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/export', [AdminController::class, 'exportForm'])->name('admin.export.form');
     Route::get('/export/download', [AdminController::class, 'exportDownload'])->name('admin.export.download');
     Route::get('/kuota', [AdminController::class, 'kuotaAdmin'])->name('admin.kuota');
+
+    Route::get('/tanggal-nonaktif', [TanggalNonaktifController::class, 'index'])
+        ->name('admin.tanggal.index');
+
+    Route::post('/tanggal-nonaktif', [TanggalNonaktifController::class, 'store'])
+        ->name('admin.tanggal.store');
+
+    Route::delete('/tanggal-nonaktif/{id}', [TanggalNonaktifController::class, 'destroy'])
+        ->name('admin.tanggal.delete');
     
     // QR Code Routes
     Route::get('/qr-code', [AdminController::class, 'qrCode'])->name('admin.qr');
@@ -44,3 +55,4 @@ Route::get('/cek-kuota', [AntrianController::class, 'cekKuota'])->name('antrian.
 
 // QR Code Public Route
 Route::get('/qr-code', [AntrianController::class, 'qr'])->name('antrian.qr');
+Route::get('/tanggal-nonaktif', [AntrianController::class, 'getTanggalNonaktif']);

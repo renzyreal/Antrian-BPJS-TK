@@ -9,9 +9,16 @@ use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Str;
+use App\Models\TanggalNonaktif;
+
 
 class AntrianController extends Controller
 {
+    public function getTanggalNonaktif()
+    {
+        return TanggalNonaktif::pluck('tanggal');
+    }
+
     // ===============================
     //  QR CODE
     // ===============================
@@ -28,8 +35,26 @@ class AntrianController extends Controller
     // ===============================
     public function form()
     {
-        return view('antrian.form');
+        $tanggalNonaktifDB = TanggalNonaktif::pluck('tanggal')->toArray();
+
+        // Generate tanggal weekend selama 90 hari ke depan (opsional)
+        $weekends = [];
+        $start = now();
+        $end = now();
+
+        while ($start->lte($end)) {
+            if ($start->isWeekend()) {
+                $weekends[] = $start->format('Y-m-d');
+            }
+            $start->addDay();
+        }
+
+        // Gabungkan tanggal nonaktif + weekend
+        $disabledDates = array_unique(array_merge($tanggalNonaktifDB, $weekends));
+
+        return view('antrian.form', compact('disabledDates'));
     }
+
 
     // ===============================
     //  KIRIM KODE VERIFIKASI
@@ -216,6 +241,25 @@ class AntrianController extends Controller
                     ->with('error', 'NIK ini sudah terdaftar mengambil antrian untuk tanggal ' . 
                            Carbon::parse($tanggal)->translatedFormat('j F Y') . 
                            '. Setiap NIK hanya boleh mengambil 1 antrian per hari.');
+            }
+
+            // Cek jika hari Sabtu/Minggu
+            $dayOfWeek = Carbon::parse($tanggal)->dayOfWeek; 
+            // 0 = Minggu, 6 = Sabtu
+
+            if ($dayOfWeek == 0 || $dayOfWeek == 6) {
+                return back()
+                    ->withInput()
+                    ->with('error', 'Tidak dapat mengambil antrian pada hari Sabtu atau Minggu.');
+            }
+
+            // Cek tanggal nonaktif (libur/kegiatan)
+            $nonaktif = TanggalNonaktif::where('tanggal', $tanggal)->first();
+
+            if ($nonaktif) {
+                return back()
+                    ->withInput()
+                    ->with('error', "Tanggal $tanggal tidak tersedia untuk pengambilan antrian. Alasan: {$nonaktif->keterangan}");
             }
 
             // Hitung antrian hari itu max 15
@@ -517,6 +561,28 @@ class AntrianController extends Controller
     {
         $tanggal = $request->tanggal;
         $now = Carbon::now('Asia/Makassar');
+
+        // Cek weekend
+        $dayOfWeek = Carbon::parse($tanggal)->dayOfWeek;
+        if ($dayOfWeek == 0 || $dayOfWeek == 6) {
+            return response()->json([
+                'tanggal' => $tanggal,
+                'tersisa' => 0,
+                'disabled' => true,
+                'message' => 'Tanggal ini tidak tersedia (Weekend)'
+            ]);
+        }
+
+        // Cek libur/kegiatan
+        if (TanggalNonaktif::where('tanggal', $tanggal)->exists()) {
+            return response()->json([
+                'tanggal' => $tanggal,
+                'tersisa' => 0,
+                'disabled' => true,
+                'message' => 'Tanggal ini dinonaktifkan oleh admin'
+            ]);
+        }
+
 
         $blocks = [
             ['start' => '08:00', 'end' => '09:30', 'range' => [1, 3]],

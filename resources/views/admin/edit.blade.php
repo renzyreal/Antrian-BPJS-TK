@@ -78,7 +78,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route('admin.update') }}" method="POST" class="space-y-4">
+                <form action="{{ route('admin.profil.update') }}" method="POST" class="space-y-4">
                     @csrf
                     @method('POST')
 

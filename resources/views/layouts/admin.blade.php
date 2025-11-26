@@ -266,6 +266,13 @@
                             <div class="nav-indicator w-full"></div>
                         @endif
                     </a>
+                    <a href="{{ route('admin.tanggal.index') }}" 
+                       class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.tanggal.index') ? 'text-pink-600 font-semibold bg-pink-50' : 'text-gray-600 hover:text-pink-600 hover:bg-gray-50' }}">
+                        <i class="fas fa-calendar mr-2"></i>Set Tanggal Libur
+                        @if(request()->routeIs('admin.tanggal.index'))
+                            <div class="nav-indicator w-full"></div>
+                        @endif
+                    </a>
                     <a href="{{ route('admin.export.form') }}" 
                         class="relative px-4 lg:px-6 py-3 transition-all duration-300 rounded-t-lg whitespace-nowrap {{ request()->routeIs('admin.export*') ? 'text-pink-600 font-semibold bg-pink-50' : 'text-gray-600 hover:text-pink-600 hover:bg-gray-50' }}">
                         <i class="fas fa-download mr-2"></i>Export Data

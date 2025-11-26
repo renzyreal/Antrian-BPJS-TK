@@ -8,6 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
@@ -447,11 +450,13 @@
                         <label class="block mb-2 font-semibold text-gray-700 mobile-text sm:text-base">
                             <i class="fas fa-calendar-alt mr-2 text-pink-500"></i>Tanggal Antrian <span class="text-red-500">*</span>
                         </label>
-                        <input type="date" name="tanggal" id="tanggal" 
-                               class="w-full border border-gray-300 p-3 rounded-lg input-focus transition duration-200 mobile-text sm:text-base" 
-                               value="{{ date('Y-m-d') }}" 
-                               min="{{ date('Y-m-d') }}" required
-                               onchange="validateField(this, 'tanggal')">
+
+                        <input type="text" name="tanggal" id="tanggal"
+                            class="w-full border border-gray-300 p-3 rounded-lg input-focus transition duration-200 mobile-text sm:text-base"
+                            placeholder="Pilih tanggal"
+                            required
+                            onchange="validateField(this, 'tanggal')">
+
                         <div id="tanggal-notification" class="field-notification mt-2">
                             <div class="flex items-center text-red-600 bg-red-50 p-2 rounded-lg border border-red-200">
                                 <i class="fas fa-exclamation-circle mr-2"></i>
@@ -459,6 +464,29 @@
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                        // Ambil tanggal nonaktif dari controller
+                        const disabledDates = @json($disabledDates); 
+                        // contoh: ["2025-01-10", "2025-01-15"]
+
+                        flatpickr("#tanggal", {
+                            dateFormat: "Y-m-d",
+                            minDate: "today",
+                            disableMobile: true, // agar tampilan sama di semua device
+                            disable: [
+                                function(date) {
+                                    // Disable weekend
+                                    return (date.getDay() === 0 || date.getDay() === 6);
+                                },
+                                ...disabledDates
+                            ],
+                            locale: {
+                                firstDayOfWeek: 1 // Senin awal minggu
+                            }
+                        });
+                    </script>
+
 
                     <!-- KUOTA -->
                     <div class="mb-4 sm:mb-6">
