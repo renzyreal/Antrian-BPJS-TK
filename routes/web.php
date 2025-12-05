@@ -28,6 +28,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/export/download', [AdminController::class, 'exportDownload'])->name('admin.export.download');
     Route::get('/kuota', [AdminController::class, 'kuotaAdmin'])->name('admin.kuota');
 
+    Route::put('/antrian/{id}/update-status', [AntrianController::class, 'updateStatus'])
+        ->name('admin.antrian.update-status');
+
     Route::get('/tanggal-nonaktif', [TanggalNonaktifController::class, 'index'])
         ->name('admin.tanggal.index');
 

@@ -616,4 +616,91 @@ class AntrianController extends Controller
             'tersisa' => $available
         ]);
     }
+
+    public function updateStatus(Request $request, $id)
+{
+    \Log::info('Update Status Request Received:', [
+        'id' => $id,
+        'status' => $request->status,
+        'method' => $request->method(),
+        'all_data' => $request->all()
+    ]);
+    
+    // Validasi
+    $request->validate([
+        'status' => 'required|in:pending,diterima,cek_kasus,ditolak'
+    ]);
+    
+    try {
+        // Cari antrian
+        $antrian = Antrian::find($id);
+        
+        if (!$antrian) {
+            \Log::error('Antrian not found for ID: ' . $id);
+            
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data antrian tidak ditemukan!'
+                ], 404);
+            }
+            
+            return redirect()->back()->with('error', 'Data antrian tidak ditemukan!');
+        }
+        
+        \Log::info('Updating status:', [
+            'old_status' => $antrian->status,
+            'new_status' => $request->status
+        ]);
+        
+        // Update status
+        $antrian->status = $request->status;
+        $saved = $antrian->save();
+        
+        \Log::info('Update result:', [
+            'saved' => $saved,
+            'new_status_in_db' => $antrian->fresh()->status
+        ]);
+        
+        if ($saved) {
+            // Response untuk AJAX request
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Status berhasil diperbarui!',
+                    'status' => $antrian->status
+                ]);
+            }
+            
+            // Response untuk regular request
+            return redirect()->back()->with('success', 'Status berhasil diperbarui!');
+            
+        } else {
+            \Log::error('Failed to save status update');
+            
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menyimpan perubahan!'
+                ], 500);
+            }
+            
+            return redirect()->back()->with('error', 'Gagal menyimpan perubahan!');
+        }
+        
+    } catch (\Exception $e) {
+        \Log::error('Update status error: ' . $e->getMessage(), [
+            'trace' => $e->getTraceAsString()
+        ]);
+        
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
+        }
+        
+        return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+    }
+}
 }
