@@ -22,6 +22,7 @@ return new class extends Migration
         $table->date('tanggal');
         $table->string('jam');
         $table->integer('nomor'); // nomor antrian
+        $table->enum('status', ['pending', 'diterima', 'cek_kasus', 'ditolak'])->default('pending');
         $table->timestamps();
     });
 }

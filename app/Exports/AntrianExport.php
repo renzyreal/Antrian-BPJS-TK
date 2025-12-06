@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 
 class AntrianExport implements FromCollection, WithHeadings, WithMapping, WithStyles, WithTitle, WithEvents
 {
@@ -42,88 +43,151 @@ class AntrianExport implements FromCollection, WithHeadings, WithMapping, WithSt
 
     public function headings(): array
     {
-        $filterInfo = "Filter: ";
-        
-        if ($this->tanggal) {
-            $filterInfo .= "Tanggal " . $this->tanggal;
-        } elseif ($this->startDate && $this->endDate) {
-            $filterInfo .= "Rentang " . $this->startDate . " hingga " . $this->endDate;
-        } else {
-            $filterInfo .= "Semua Data";
-        }
-
         return [
-            [$filterInfo],
-            [], // Empty row
-            [
-                'NO ANTRIAN',
-                'TANGGAL',
-                'JAM KEDATANGAN',
-                'NAMA TENAGA KERJA',
-                'NIK TENAGA KERJA',
-                'NAMA AHLI WARIS',
-                'NOMOR WHATSAPP',
-                'WAKTU PENDAFTARAN'
-            ]
+            'NO ANTRIAN',
+            'TANGGAL',
+            'JAM KEDATANGAN',
+            'NAMA TENAGA KERJA',
+            'NIK TENAGA KERJA',
+            'NAMA AHLI WARIS',
+            'NOMOR WHATSAPP',
+            'STATUS',
+            'WAKTU PENDAFTARAN'
         ];
     }
 
     public function map($antrian): array
     {
+        // Format status ke dalam bahasa Indonesia
+        $statusMap = [
+            'pending' => 'Menunggu',
+            'diterima' => 'Diterima',
+            'cek_kasus' => 'Cek Kasus',
+            'ditolak' => 'Ditolak'
+        ];
+        
+        $statusText = $statusMap[$antrian->status] ?? $antrian->status;
+
         return [
             $antrian->nomor,
             $antrian->tanggal,
             $antrian->jam,
             $antrian->nama_tk,
-            "'" . $antrian->nik_tk, // Tambahkan apostrof untuk menjaga format NIK
+            "'" . $antrian->nik_tk,
             $antrian->ahli_waris,
-            "'" . $antrian->no_hp, // Tambahkan apostrof untuk menjaga format nomor
+            "'" . $antrian->no_hp,
+            $statusText,
             $antrian->created_at->format('Y-m-d H:i:s')
         ];
     }
 
     public function styles(Worksheet $sheet)
     {
-        return [
-            // Style untuk info filter
-            1 => [
-                'font' => ['bold' => true, 'color' => ['argb' => 'FF0000FF']],
+        // Apply header style
+        $sheet->getStyle('A1:I1')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'size' => 12,
+                'color' => ['argb' => Color::COLOR_WHITE]
             ],
-            // Style untuk header
-            3 => [
-                'font' => ['bold' => true],
-                'fill' => [
-                    'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                    'startColor' => ['argb' => 'FFE6E6FA']
-                ]
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => 'FF4F46E5'] // Indigo
             ],
-        ];
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER
+            ]
+        ]);
+
+        // Auto size columns
+        foreach (range('A', 'I') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        // Apply borders
+        $lastRow = $sheet->getHighestRow();
+        $sheet->getStyle('A1:I' . $lastRow)->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => 'FFCCCCCC'],
+                ],
+            ],
+        ]);
+
+        // Center align for specific columns
+        $centerColumns = ['A', 'B', 'C', 'H', 'I'];
+        foreach ($centerColumns as $column) {
+            $sheet->getStyle($column . '2:' . $column . $lastRow)
+                  ->getAlignment()
+                  ->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        }
+
+        return [];
     }
 
     public function title(): string
     {
-        if ($this->tanggal) {
-            return 'Antrian ' . $this->tanggal;
-        } elseif ($this->startDate && $this->endDate) {
-            return 'Antrian ' . $this->startDate . ' to ' . $this->endDate;
-        } else {
-            return 'Semua Antrian';
-        }
+        return 'Data Antrian';
     }
 
     public function registerEvents(): array
     {
         return [
             AfterSheet::class => function(AfterSheet $event) {
-                // Auto size columns
-                $event->sheet->getDelegate()->getColumnDimension('A')->setAutoSize(true);
-                $event->sheet->getDelegate()->getColumnDimension('B')->setAutoSize(true);
-                $event->sheet->getDelegate()->getColumnDimension('C')->setAutoSize(true);
-                $event->sheet->getDelegate()->getColumnDimension('D')->setAutoSize(true);
-                $event->sheet->getDelegate()->getColumnDimension('E')->setAutoSize(true);
-                $event->sheet->getDelegate()->getColumnDimension('F')->setAutoSize(true);
-                $event->sheet->getDelegate()->getColumnDimension('G')->setAutoSize(true);
-                $event->sheet->getDelegate()->getColumnDimension('H')->setAutoSize(true);
+                // Add filter
+                $event->sheet->getDelegate()->setAutoFilter('A1:I1');
+                
+                // Freeze header row
+                $event->sheet->getDelegate()->freezePane('A2');
+                
+                // Apply color to status column based on value
+                $lastRow = $event->sheet->getDelegate()->getHighestRow();
+                
+                for ($row = 2; $row <= $lastRow; $row++) {
+                    $status = $event->sheet->getDelegate()->getCell('H' . $row)->getValue();
+                    
+                    // Warna yang lebih baik
+                    $fillColor = match($status) {
+                        'Diterima' => 'C6EFCE', // Hijau muda (Excel default green)
+                        'Cek Kasus' => 'FFEB9C', // Kuning muda (Excel default yellow)
+                        'Ditolak' => 'FFC7CE', // Merah muda (Excel default red)
+                        'Menunggu' => 'D9D9D9', // Abu-abu muda (Excel default gray)
+                        default => 'FFFFFF'
+                    };
+                    
+                    // Warna teks
+                    $fontColor = match($status) {
+                        'Diterima' => '006100', // Hijau tua
+                        'Cek Kasus' => '9C5700', // Coklat tua
+                        'Ditolak' => '9C0006', // Merah tua
+                        'Menunggu' => '000000', // Hitam
+                        default => '000000'
+                    };
+                    
+                    $event->sheet->getDelegate()->getStyle('H' . $row)
+                        ->applyFromArray([
+                            'fill' => [
+                                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                                'startColor' => ['argb' => $fillColor]
+                            ],
+                            'font' => [
+                                'bold' => true,
+                                'color' => ['argb' => $fontColor]
+                            ]
+                        ]);
+                }
+                
+                // Format tanggal column
+                $event->sheet->getDelegate()->getStyle('B2:B' . $lastRow)
+                    ->getNumberFormat()
+                    ->setFormatCode('yyyy-mm-dd');
+                
+                // Format waktu column
+                $event->sheet->getDelegate()->getStyle('I2:I' . $lastRow)
+                    ->getNumberFormat()
+                    ->setFormatCode('yyyy-mm-dd hh:mm:ss');
             },
         ];
     }

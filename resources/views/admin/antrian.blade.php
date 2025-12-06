@@ -318,27 +318,62 @@
 
                         <!-- Aksi -->
                         <td class="px-4 py-4 whitespace-nowrap">
-                            <div class="flex items-center space-x-2">
-                                <a href="{{ route('admin.antrian.show', $item->id) }}" 
-                                   class="inline-flex items-center px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-all duration-200 transform hover:scale-105 group/btn"
-                                   title="Lihat Detail">
-                                    <i class="fas fa-eye text-sm"></i>
-                                    <span class="ml-1 text-xs font-medium hidden sm:inline">Detail</span>
-                                </a>
-                                <form action="{{ route('admin.antrian.destroy', $item->id) }}" method="POST" 
-                                      onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')"
-                                      class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" 
-                                            class="inline-flex items-center px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all duration-200 transform hover:scale-105 group/btn"
-                                            title="Hapus Data">
-                                        <i class="fas fa-trash text-sm"></i>
-                                        <span class="ml-1 text-xs font-medium hidden sm:inline">Hapus</span>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
+    <div class="flex items-center space-x-2">
+        <!-- Tombol Detail -->
+        <a href="{{ route('admin.antrian.show', $item->id) }}" 
+           class="inline-flex items-center px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-all duration-200 transform hover:scale-105 group/btn"
+           title="Lihat Detail">
+            <i class="fas fa-eye text-sm"></i>
+            <span class="ml-1 text-xs font-medium hidden sm:inline">Detail</span>
+        </a>
+        
+        <!-- Tombol Status Dropdown -->
+        <button type="button"
+                onclick="openStatusDropdown(event, {{ $item->id }}, '{{ $item->status }}')"
+                class="inline-flex items-center px-3 py-2 rounded-lg hover:opacity-90 transition-all duration-200 transform hover:scale-105 group/btn status-btn"
+                title="Ubah Status"
+                id="status-btn-{{ $item->id }}"
+                data-status="{{ $item->status }}">
+            
+            @switch($item->status)
+                @case('diterima')
+                    <i class="fas fa-check-circle text-sm text-green-600"></i>
+                    <span class="ml-1 text-xs font-medium hidden sm:inline text-green-700">Diterima</span>
+                    @break
+                
+                @case('cek_kasus')
+                    <i class="fas fa-search text-sm text-yellow-600"></i>
+                    <span class="ml-1 text-xs font-medium hidden sm:inline text-yellow-700">Cek Kasus</span>
+                    @break
+                
+                @case('ditolak')
+                    <i class="fas fa-times-circle text-sm text-red-600"></i>
+                    <span class="ml-1 text-xs font-medium hidden sm:inline text-red-700">Ditolak</span>
+                    @break
+                
+                @default
+                    <i class="fas fa-clock text-sm text-gray-600"></i>
+                    <span class="ml-1 text-xs font-medium hidden sm:inline text-gray-700">Pending</span>
+            @endswitch
+            
+            <i class="fas fa-chevron-down ml-1 text-xs text-gray-500"></i>
+        </button>
+        
+        <!-- Tombol Hapus -->
+        <form action="{{ route('admin.antrian.destroy', $item->id) }}" method="POST" 
+              onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')"
+              class="inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" 
+                    class="inline-flex items-center px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-all duration-200 transform hover:scale-105 group/btn"
+                    title="Hapus Data">
+                <i class="fas fa-trash text-sm"></i>
+                <span class="ml-1 text-xs font-medium hidden sm:inline">Hapus</span>
+            </button>
+        </form>
+    </div>
+</td>
                     </tr>
                     @empty
                     <tr>
@@ -441,6 +476,7 @@
         @endif
     </div>
 </div>
+<div id="global-dropdown-container" class="fixed z-[99999]"></div>
 @endsection
 
 @push('styles')
@@ -494,36 +530,404 @@
     tbody tr:nth-child(3) { animation-delay: 0.3s; }
     tbody tr:nth-child(4) { animation-delay: 0.4s; }
     tbody tr:nth-child(5) { animation-delay: 0.5s; }
+
+    /* Status Dropdown Styles */
+    .status-dropdown-menu {
+        position: fixed;
+        width: 200px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        border: 1px solid #e5e7eb;
+        z-index: 99999;
+        animation: dropdownFadeIn 0.2s ease-out;
+    }
+    
+    @keyframes dropdownFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px) scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    
+    /* Overlay background */
+    .dropdown-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: transparent;
+        z-index: 99998;
+    }
+    
+    /* Styling untuk tombol status berdasarkan status saat ini */
+    .status-btn {
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+    }
+    
+    .status-btn[data-status="diterima"] {
+        background-color: rgba(34, 197, 94, 0.1);
+        border-color: rgba(34, 197, 94, 0.2);
+    }
+    
+    .status-btn[data-status="cek_kasus"] {
+        background-color: rgba(234, 179, 8, 0.1);
+        border-color: rgba(234, 179, 8, 0.2);
+    }
+    
+    .status-btn[data-status="ditolak"] {
+        background-color: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.2);
+    }
+    
+    .status-btn[data-status="pending"] {
+        background-color: rgba(107, 114, 128, 0.1);
+        border-color: rgba(107, 114, 128, 0.2);
+    }
+    
+    /* Hover effect */
+    .status-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    /* Animation for status change */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .animate-pulse {
+        animation: pulse 0.5s ease-in-out;
+    }
+    
+    /* Untuk tampilan mobile yang lebih kecil */
+    @media (max-width: 640px) {
+        .status-btn {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+        
+        .status-btn i:first-child {
+            margin-right: 0;
+        }
+    }
+    
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+        opacity: 0;
+    }
 </style>
 @endpush
 
 @push('scripts')
 <script>
-    // Add hover effects and animations
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add loading animation for cards
-        const cards = document.querySelectorAll('.card-hover');
-        cards.forEach((card, index) => {
-            card.style.animationDelay = `${index * 100}ms`;
-            card.classList.add('animate-fade-in-up');
-        });
-
-        // Add click effect for buttons
-        const buttons = document.querySelectorAll('.group\\/btn');
-        buttons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-        });
+// Add hover effects and animations
+document.addEventListener('DOMContentLoaded', function() {
+    // Add loading animation for cards
+    const cards = document.querySelectorAll('.card-hover');
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 100}ms`;
+        card.classList.add('animate-fade-in-up');
     });
 
-    // Auto refresh every 60 seconds for real-time updates
-    setTimeout(function() {
-        window.location.reload();
-    }, 60000);
+    // Add click effect for buttons
+    const buttons = document.querySelectorAll('.group\\/btn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
+});
+
+// Auto refresh every 60 seconds for real-time updates
+setTimeout(function() {
+    window.location.reload();
+}, 60000);
+
+let currentDropdown = null;
+let currentOverlay = null;
+
+function openStatusDropdown(event, id, currentStatus) {
+    event.stopPropagation();
+    
+    // Jika dropdown yang sama sedang terbuka, tutup
+    if (currentDropdown && currentDropdown.dataset.id === id.toString()) {
+        closeDropdown();
+        return;
+    }
+    
+    // Tutup dropdown sebelumnya jika ada
+    closeDropdown();
+    
+    // Dapatkan posisi tombol
+    const button = document.getElementById(`status-btn-${id}`);
+    const rect = button.getBoundingClientRect();
+    
+    // Buat overlay untuk menangkap klik di luar
+    const overlay = document.createElement('div');
+    overlay.className = 'dropdown-overlay';
+    overlay.onclick = closeDropdown;
+    
+    // Buat dropdown menu
+    const dropdown = document.createElement('div');
+    dropdown.className = 'status-dropdown-menu';
+    dropdown.dataset.id = id;
+    dropdown.style.left = `${rect.left}px`;
+    
+    // Hitung posisi vertikal
+    const viewportHeight = window.innerHeight;
+    const dropdownHeight = 136; // Approximate height
+    const spaceBelow = viewportHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    
+    if (spaceBelow >= dropdownHeight || spaceBelow >= spaceAbove) {
+        // Tampilkan di bawah
+        dropdown.style.top = `${rect.bottom + 8}px`;
+    } else {
+        // Tampilkan di atas
+        dropdown.style.top = `${rect.top - dropdownHeight - 8}px`;
+    }
+    
+    // Buat dropdown content dengan button AJAX
+    dropdown.innerHTML = `
+        <div class="p-2">
+            <button type="button" 
+                    class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-green-50 text-green-600 flex items-center mb-1 
+                           ${currentStatus === 'diterima' ? 'bg-green-50 font-medium border-l-4 border-green-500' : ''}"
+                    onclick="updateStatus(${id}, 'diterima')">
+                <i class="fas fa-check-circle mr-2"></i>
+                Diterima
+                ${currentStatus === 'diterima' ? '<i class="fas fa-check ml-auto text-green-500"></i>' : ''}
+            </button>
+            
+            <button type="button" 
+                    class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-yellow-50 text-yellow-600 flex items-center mb-1 
+                           ${currentStatus === 'cek_kasus' ? 'bg-yellow-50 font-medium border-l-4 border-yellow-500' : ''}"
+                    onclick="updateStatus(${id}, 'cek_kasus')">
+                <i class="fas fa-search mr-2"></i>
+                Cek Kasus
+                ${currentStatus === 'cek_kasus' ? '<i class="fas fa-check ml-auto text-yellow-500"></i>' : ''}
+            </button>
+            
+            <button type="button" 
+                    class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-red-50 text-red-600 flex items-center 
+                           ${currentStatus === 'ditolak' ? 'bg-red-50 font-medium border-l-4 border-red-500' : ''}"
+                    onclick="updateStatus(${id}, 'ditolak')">
+                <i class="fas fa-times-circle mr-2"></i>
+                Ditolak
+                ${currentStatus === 'ditolak' ? '<i class="fas fa-check ml-auto text-red-500"></i>' : ''}
+            </button>
+        </div>
+    `;
+    
+    // Tambahkan ke container
+    const container = document.getElementById('global-dropdown-container');
+    container.appendChild(overlay);
+    container.appendChild(dropdown);
+    
+    // Simpan referensi
+    currentDropdown = dropdown;
+    currentOverlay = overlay;
+}
+
+// Fungsi AJAX untuk update status
+function updateStatus(id, status) {
+    // Update UI terlebih dahulu
+    updateButtonStatus(id, status);
+    closeDropdown();
+    
+    // Tampilkan loading
+    showLoading(id);
+    
+    // Kirim request AJAX
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    
+    // Gunakan FormData untuk mengirim data
+    const formData = new FormData();
+    formData.append('_method', 'PUT');
+    formData.append('status', status);
+    formData.append('_token', csrfToken);
+    
+    // Kirim request
+    fetch(`/admin/antrian/${id}/update-status`, {
+        method: 'POST', // Laravel PUT harus via POST dengan _method
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(response => {
+        // Hapus loading
+        hideLoading(id);
+        
+        if (response.ok) {
+            return response.json().then(data => {
+                showNotification('Status berhasil diperbarui!', 'success');
+                console.log('Status updated successfully:', data);
+            });
+        } else {
+            return response.json().then(data => {
+                throw new Error(data.message || 'Gagal memperbarui status');
+            });
+        }
+    })
+    .catch(error => {
+        // Hapus loading
+        hideLoading(id);
+        
+        console.error('Error updating status:', error);
+        showNotification(error.message || 'Gagal memperbarui status!', 'error');
+        
+        // Optionally reload the page to get correct status from server
+        setTimeout(() => {
+            window.location.reload();
+        }, 1500);
+    });
+}
+
+// Fungsi untuk update UI tombol
+function updateButtonStatus(id, newStatus) {
+    const button = document.getElementById(`status-btn-${id}`);
+    if (!button) return;
+    
+    // Update data-status attribute
+    button.dataset.status = newStatus;
+    
+    // Update icon dan text berdasarkan status baru
+    const iconMap = {
+        'diterima': { icon: 'fa-check-circle', color: 'green', text: 'Diterima' },
+        'cek_kasus': { icon: 'fa-search', color: 'yellow', text: 'Cek Kasus' },
+        'ditolak': { icon: 'fa-times-circle', color: 'red', text: 'Ditolak' },
+        'pending': { icon: 'fa-clock', color: 'gray', text: 'Pending' }
+    };
+    
+    const statusInfo = iconMap[newStatus] || iconMap['pending'];
+    
+    // Update icon
+    const iconElement = button.querySelector('i:first-child');
+    if (iconElement) {
+        iconElement.className = `fas ${statusInfo.icon} text-sm text-${statusInfo.color}-600`;
+    }
+    
+    // Update text jika ada
+    const textSpan = button.querySelector('span.text-xs');
+    if (textSpan) {
+        textSpan.textContent = statusInfo.text;
+        textSpan.className = `ml-1 text-xs font-medium hidden sm:inline text-${statusInfo.color}-700`;
+    }
+    
+    // Update class styling
+    const colorClasses = {
+        'diterima': 'bg-green-50 border-green-500',
+        'cek_kasus': 'bg-yellow-50 border-yellow-500',
+        'ditolak': 'bg-red-50 border-red-500',
+        'pending': 'bg-gray-50 border-gray-500'
+    };
+    
+    // Remove existing status classes
+    Object.values(colorClasses).forEach(className => {
+        const classes = className.split(' ');
+        classes.forEach(cls => button.classList.remove(cls));
+    });
+    
+    // Add new classes
+    if (colorClasses[newStatus]) {
+        const classes = colorClasses[newStatus].split(' ');
+        classes.forEach(cls => button.classList.add(cls));
+    }
+}
+
+// Fungsi untuk menampilkan loading di tombol
+function showLoading(id) {
+    const button = document.getElementById(`status-btn-${id}`);
+    if (button) {
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin text-sm"></i><span class="ml-1 text-xs font-medium">Loading...</span>';
+        button.disabled = true;
+        button.dataset.originalHtml = originalHTML;
+    }
+}
+
+// Fungsi untuk menyembunyikan loading
+function hideLoading(id) {
+    const button = document.getElementById(`status-btn-${id}`);
+    if (button && button.dataset.originalHtml) {
+        button.innerHTML = button.dataset.originalHtml;
+        button.disabled = false;
+        delete button.dataset.originalHtml;
+    }
+}
+
+// Fungsi untuk menampilkan notifikasi
+function showNotification(message, type = 'success') {
+    // Buat elemen notifikasi
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-[100000] px-6 py-4 rounded-lg shadow-xl flex items-center space-x-3 ${
+        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+    }`;
+    notification.style.animation = 'slideInRight 0.3s ease-out';
+    
+    notification.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} text-lg"></i>
+        <span class="font-medium">${message}</span>
+        <button onclick="this.parentElement.remove()" class="ml-4 text-white/80 hover:text-white">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    // Tambahkan ke body
+    document.body.appendChild(notification);
+    
+    // Auto remove setelah 3 detik
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.style.animation = 'slideOutRight 0.3s ease-out forwards';
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.parentElement.removeChild(notification);
+                }
+            }, 300);
+        }
+    }, 3000);
+}
+
+function closeDropdown() {
+    if (currentDropdown) {
+        currentDropdown.remove();
+        currentDropdown = null;
+    }
+    if (currentOverlay) {
+        currentOverlay.remove();
+        currentOverlay = null;
+    }
+}
+
+// Tutup dropdown saat tekan ESC
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeDropdown();
+    }
+});
+
+// Tutup dropdown saat klik di luar
+document.addEventListener('click', function(event) {
+    if (currentOverlay && !event.target.closest('.status-dropdown-menu')) {
+        closeDropdown();
+    }
+});
 </script>
 
 <style>
