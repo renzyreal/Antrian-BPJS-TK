@@ -91,7 +91,7 @@ class AdminController extends Controller
 
         $antrian = $query->orderBy('tanggal', 'desc')
             ->orderBy('nomor')
-            ->paginate(20);
+            ->paginate(15);
 
         return view('admin.antrian', compact('antrian'));
     }

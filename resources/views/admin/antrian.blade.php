@@ -363,7 +363,78 @@
                     Menampilkan {{ $antrian->firstItem() ?? 0 }} - {{ $antrian->lastItem() ?? 0 }} dari {{ $antrian->total() }} data
                 </div>
                 <div class="flex justify-center">
-                    {{ $antrian->links('vendor.pagination.tailwind') }}
+                    <!-- Custom Pagination -->
+                    <div class="flex items-center space-x-2">
+                        {{-- Previous Page Link --}}
+                        @if ($antrian->onFirstPage())
+                            <span class="px-3 py-2 text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed transition-all duration-200">
+                                <i class="fas fa-chevron-left text-sm"></i>
+                            </span>
+                        @else
+                            <a href="{{ $antrian->previousPageUrl() }}" 
+                            class="px-3 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 flex items-center">
+                                <i class="fas fa-chevron-left text-sm"></i>
+                            </a>
+                        @endif
+
+                        {{-- Page Numbers --}}
+                        <div class="flex items-center space-x-1">
+                            @php
+                                $current = $antrian->currentPage();
+                                $last = $antrian->lastPage();
+                                $start = max(1, $current - 2);
+                                $end = min($last, $current + 2);
+                            @endphp
+
+                            {{-- First Page --}}
+                            @if ($start > 1)
+                                <a href="{{ $antrian->url(1) }}" 
+                                class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                    1
+                                </a>
+                                @if ($start > 2)
+                                    <span class="px-2 text-gray-400">...</span>
+                                @endif
+                            @endif
+
+                            {{-- Page Numbers --}}
+                            @for ($i = $start; $i <= $end; $i++)
+                                @if ($i == $current)
+                                    <span class="px-3 py-2 text-sm font-bold bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg shadow-sm">
+                                        {{ $i }}
+                                    </span>
+                                @else
+                                    <a href="{{ $antrian->url($i) }}" 
+                                    class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                        {{ $i }}
+                                    </a>
+                                @endif
+                            @endfor
+
+                            {{-- Last Page --}}
+                            @if ($end < $last)
+                                @if ($end < $last - 1)
+                                    <span class="px-2 text-gray-400">...</span>
+                                @endif
+                                <a href="{{ $antrian->url($last) }}" 
+                                class="px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                    {{ $last }}
+                                </a>
+                            @endif
+                        </div>
+
+                        {{-- Next Page Link --}}
+                        @if ($antrian->hasMorePages())
+                            <a href="{{ $antrian->nextPageUrl() }}" 
+                            class="px-3 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5 flex items-center">
+                                <i class="fas fa-chevron-right text-sm"></i>
+                            </a>
+                        @else
+                            <span class="px-3 py-2 text-gray-400 bg-gray-100 rounded-lg cursor-not-allowed transition-all duration-200">
+                                <i class="fas fa-chevron-right text-sm"></i>
+                            </span>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
