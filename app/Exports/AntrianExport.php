@@ -61,7 +61,7 @@ class AntrianExport implements FromCollection, WithHeadings, WithMapping, WithSt
         // Format status ke dalam bahasa Indonesia
         $statusMap = [
             'pending' => 'Menunggu',
-            'diterima' => 'Diterima',
+            'dibayarkan' => 'Dibayarkan',
             'cek_kasus' => 'Cek Kasus',
             'ditolak' => 'Ditolak'
         ];
@@ -150,7 +150,7 @@ class AntrianExport implements FromCollection, WithHeadings, WithMapping, WithSt
                     
                     // Warna yang lebih baik
                     $fillColor = match($status) {
-                        'Diterima' => 'C6EFCE', // Hijau muda (Excel default green)
+                        'Dibayarkan' => 'C6EFCE', // Hijau muda (Excel default green)
                         'Cek Kasus' => 'FFEB9C', // Kuning muda (Excel default yellow)
                         'Ditolak' => 'FFC7CE', // Merah muda (Excel default red)
                         'Menunggu' => 'D9D9D9', // Abu-abu muda (Excel default gray)
@@ -159,7 +159,7 @@ class AntrianExport implements FromCollection, WithHeadings, WithMapping, WithSt
                     
                     // Warna teks
                     $fontColor = match($status) {
-                        'Diterima' => '006100', // Hijau tua
+                        'Dibayarkan' => '006100', // Hijau tua
                         'Cek Kasus' => '9C5700', // Coklat tua
                         'Ditolak' => '9C0006', // Merah tua
                         'Menunggu' => '000000', // Hitam

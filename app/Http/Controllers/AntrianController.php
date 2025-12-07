@@ -628,7 +628,7 @@ class AntrianController extends Controller
     
     // Validasi
     $request->validate([
-        'status' => 'required|in:pending,diterima,cek_kasus,ditolak'
+        'status' => 'required|in:pending,dibayarkan,cek_kasus,ditolak'
     ]);
     
     try {

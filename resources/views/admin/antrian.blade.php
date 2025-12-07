@@ -336,9 +336,9 @@
                 data-status="{{ $item->status }}">
             
             @switch($item->status)
-                @case('diterima')
+                @case('dibayarkan')
                     <i class="fas fa-check-circle text-sm text-green-600"></i>
-                    <span class="ml-1 text-xs font-medium hidden sm:inline text-green-700">Diterima</span>
+                    <span class="ml-1 text-xs font-medium hidden sm:inline text-green-700">Dibayarkan</span>
                     @break
                 
                 @case('cek_kasus')
@@ -571,7 +571,7 @@
         border: 1px solid transparent;
     }
     
-    .status-btn[data-status="diterima"] {
+    .status-btn[data-status="dibayarkan"] {
         background-color: rgba(34, 197, 94, 0.1);
         border-color: rgba(34, 197, 94, 0.2);
     }
@@ -704,11 +704,11 @@ function openStatusDropdown(event, id, currentStatus) {
         <div class="p-2">
             <button type="button" 
                     class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-green-50 text-green-600 flex items-center mb-1 
-                           ${currentStatus === 'diterima' ? 'bg-green-50 font-medium border-l-4 border-green-500' : ''}"
-                    onclick="updateStatus(${id}, 'diterima')">
+                           ${currentStatus === 'dibayarkan' ? 'bg-green-50 font-medium border-l-4 border-green-500' : ''}"
+                    onclick="updateStatus(${id}, 'dibayarkan')">
                 <i class="fas fa-check-circle mr-2"></i>
-                Diterima
-                ${currentStatus === 'diterima' ? '<i class="fas fa-check ml-auto text-green-500"></i>' : ''}
+                Dibayarkan
+                ${currentStatus === 'dibayarkan' ? '<i class="fas fa-check ml-auto text-green-500"></i>' : ''}
             </button>
             
             <button type="button" 
@@ -808,7 +808,7 @@ function updateButtonStatus(id, newStatus) {
     
     // Update icon dan text berdasarkan status baru
     const iconMap = {
-        'diterima': { icon: 'fa-check-circle', color: 'green', text: 'Diterima' },
+        'dibayarkan': { icon: 'fa-check-circle', color: 'green', text: 'dibayarkan' },
         'cek_kasus': { icon: 'fa-search', color: 'yellow', text: 'Cek Kasus' },
         'ditolak': { icon: 'fa-times-circle', color: 'red', text: 'Ditolak' },
         'pending': { icon: 'fa-clock', color: 'gray', text: 'Pending' }
@@ -831,7 +831,7 @@ function updateButtonStatus(id, newStatus) {
     
     // Update class styling
     const colorClasses = {
-        'diterima': 'bg-green-50 border-green-500',
+        'dibayarkan': 'bg-green-50 border-green-500',
         'cek_kasus': 'bg-yellow-50 border-yellow-500',
         'ditolak': 'bg-red-50 border-red-500',
         'pending': 'bg-gray-50 border-gray-500'
