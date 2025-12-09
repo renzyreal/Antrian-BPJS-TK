@@ -18,8 +18,8 @@
         <div class="absolute -top-8 -left-8 w-20 h-20 bg-white/10 rounded-full"></div>
     </div>
 
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-8">
+    <!-- Stats Cards - Row 1 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-6">
         <!-- Today's Queue -->
         <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-green-500 relative overflow-hidden">
             <!-- Background Pattern -->
@@ -197,6 +197,184 @@
         </div>
     </div>
 
+    <!-- Status Statistics Cards - Row 2 -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+        <!-- Total Data -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-indigo-500 relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-indigo-50 text-indigo-600 shadow-sm">
+                    <i class="fas fa-database text-xl"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <p class="text-sm font-medium text-gray-600">Total Antrian</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($stats['total']) }}</p>
+                    <div class="text-xs text-gray-500 mt-1">Semua Waktu</div>
+                </div>
+            </div>
+            <div class="absolute top-4 right-4">
+                <div class="w-3 h-3 rounded-full bg-indigo-400"></div>
+            </div>
+        </div>
+
+        <!-- Status: Menunggu -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-gray-500 relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-gray-50 text-gray-600 shadow-sm">
+                    <i class="fas fa-clock text-xl"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <p class="text-sm font-medium text-gray-600">Menunggu</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($statusCounts['pending'] ?? 0) }}</p>
+                    <div class="text-xs text-gray-500 mt-1">
+                        @if($stats['total'] > 0)
+                            {{ number_format((($statusCounts['pending'] ?? 0) / $stats['total']) * 100, 1) }}%
+                        @else
+                            0%
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-4 right-4">
+                <div class="w-3 h-3 rounded-full bg-gray-400"></div>
+            </div>
+        </div>
+
+        <!-- Status: Diterima -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-green-500 relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-green-50 text-green-600 shadow-sm">
+                    <i class="fas fa-check-circle text-xl"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <p class="text-sm font-medium text-gray-600">Diterima</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($statusCounts['diterima'] ?? 0) }}</p>
+                    <div class="text-xs text-gray-500 mt-1">
+                        @if($stats['total'] > 0)
+                            {{ number_format((($statusCounts['diterima'] ?? 0) / $stats['total']) * 100, 1) }}%
+                        @else
+                            0%
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-4 right-4">
+                <div class="w-3 h-3 rounded-full bg-green-400"></div>
+            </div>
+        </div>
+
+        <!-- Status: Cek Kasus -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-yellow-500 relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-yellow-50 text-yellow-600 shadow-sm">
+                    <i class="fas fa-search text-xl"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <p class="text-sm font-medium text-gray-600">Cek Kasus</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($statusCounts['cek_kasus'] ?? 0) }}</p>
+                    <div class="text-xs text-gray-500 mt-1">
+                        @if($stats['total'] > 0)
+                            {{ number_format((($statusCounts['cek_kasus'] ?? 0) / $stats['total']) * 100, 1) }}%
+                        @else
+                            0%
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-4 right-4">
+                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Distribution - Row 3 -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Status: Ditolak -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-red-500 relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-red-50 text-red-600 shadow-sm">
+                    <i class="fas fa-times-circle text-xl"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <p class="text-sm font-medium text-gray-600">Ditolak</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($statusCounts['ditolak'] ?? 0) }}</p>
+                    <div class="text-xs text-gray-500 mt-1">
+                        @if($stats['total'] > 0)
+                            {{ number_format((($statusCounts['ditolak'] ?? 0) / $stats['total']) * 100, 1) }}%
+                        @else
+                            0%
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-4 right-4">
+                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+            </div>
+        </div>
+
+        <!-- Status Chart Summary -->
+        <div class="lg:col-span-2 bg-white rounded-2xl shadow-lg p-6 card-hover">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                    <i class="fas fa-chart-pie mr-3 text-purple-600"></i>
+                    <span>Distribusi Status Antrian</span>
+                </h3>
+                <span class="text-sm text-gray-500">Total: {{ $stats['total'] }} data</span>
+            </div>
+            
+            <div class="space-y-4">
+                @php
+                    $statusColors = [
+                        'pending' => ['bg' => 'bg-gray-500', 'text' => 'text-gray-700'],
+                        'diterima' => ['bg' => 'bg-green-500', 'text' => 'text-green-700'],
+                        'cek_kasus' => ['bg' => 'bg-yellow-500', 'text' => 'text-yellow-700'],
+                        'ditolak' => ['bg' => 'bg-red-500', 'text' => 'text-red-700'],
+                    ];
+                    
+                    $statusLabels = [
+                        'pending' => 'Menunggu',
+                        'diterima' => 'Diterima',
+                        'cek_kasus' => 'Cek Kasus',
+                        'ditolak' => 'Ditolak',
+                    ];
+                @endphp
+                
+                @foreach(['diterima', 'cek_kasus', 'pending', 'ditolak'] as $status)
+                    @php
+                        $count = $statusCounts[$status] ?? 0;
+                        $percentage = $stats['total'] > 0 ? ($count / $stats['total']) * 100 : 0;
+                    @endphp
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <div class="flex items-center">
+                                <span class="w-3 h-3 rounded-full {{ $statusColors[$status]['bg'] }} mr-2"></span>
+                                <span class="font-medium {{ $statusColors[$status]['text'] }}">{{ $statusLabels[$status] }}</span>
+                                <span class="ml-2 text-gray-500">{{ $count }}</span>
+                            </div>
+                            <span class="font-medium">{{ number_format($percentage, 1) }}%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="{{ $statusColors[$status]['bg'] }} h-2 rounded-full transition-all duration-500" 
+                                style="width: {{ $percentage }}%"></div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            
+            <!-- Status Legend -->
+            <div class="mt-6 pt-4 border-t border-gray-200">
+                <div class="flex flex-wrap gap-2">
+                    @foreach($statusLabels as $key => $label)
+                        <div class="flex items-center px-3 py-1.5 bg-gray-50 rounded-lg">
+                            <span class="w-2 h-2 rounded-full {{ $statusColors[$key]['bg'] }} mr-2"></span>
+                            <span class="text-xs font-medium {{ $statusColors[$key]['text'] }}">{{ $label }}</span>
+                            <span class="ml-2 text-xs text-gray-500">{{ $statusCounts[$key] ?? 0 }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content Grid -->
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
         <!-- Antrian Hari Ini -->
@@ -207,9 +385,19 @@
                         <i class="fas fa-list-ol mr-3 text-green-600"></i>
                         <span>Antrian Hari Ini</span>
                     </h2>
-                    <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                        {{ $antrianHariIni->count() }} antrian
-                    </span>
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            {{ $antrianHariIni->count() }} antrian
+                        </span>
+                        @php
+                            $todayStatusCount = $antrianHariIni->groupBy('status')->map->count();
+                        @endphp
+                        @if(($todayStatusCount['diterima'] ?? 0) > 0)
+                            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                {{ $todayStatusCount['diterima'] }} ✅
+                            </span>
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="p-4 sm:p-6 max-h-96 overflow-y-auto custom-scrollbar">
@@ -222,10 +410,23 @@
                                     <span class="bg-green-600 text-white px-3 py-2 rounded-xl text-sm font-bold min-w-12 text-center block">
                                         #{{ $antrian->nomor }}
                                     </span>
-                                    <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-300 rounded-full animate-pulse"></div>
+                                    <div class="absolute -top-1 -right-1 w-3 h-3 {{ 
+                                        $antrian->status == 'diterima' ? 'bg-green-300' : 
+                                        ($antrian->status == 'cek_kasus' ? 'bg-yellow-300' : 
+                                        ($antrian->status == 'ditolak' ? 'bg-red-300' : 'bg-gray-300'))
+                                    }} rounded-full animate-pulse"></div>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <p class="font-semibold text-gray-900 truncate">{{ $antrian->nama_tk }}</p>
+                                    <div class="flex items-center space-x-2">
+                                        <p class="font-semibold text-gray-900 truncate">{{ $antrian->nama_tk }}</p>
+                                        <span class="text-xs px-2 py-1 rounded-full {{ 
+                                            $antrian->status == 'diterima' ? 'bg-green-100 text-green-800' : 
+                                            ($antrian->status == 'cek_kasus' ? 'bg-yellow-100 text-yellow-800' : 
+                                            ($antrian->status == 'ditolak' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'))
+                                        }}">
+                                            {{ ucfirst(str_replace('_', ' ', $antrian->status)) }}
+                                        </span>
+                                    </div>
                                     <div class="flex items-center space-x-2 text-sm text-gray-600 mt-1">
                                         <i class="far fa-clock text-xs"></i>
                                         <span>{{ $antrian->jam }}</span>
@@ -259,9 +460,19 @@
                         <i class="fas fa-calendar-alt mr-3 text-fuchsia-600"></i>
                         <span>Antrian Besok</span>
                     </h2>
-                    <span class="bg-fuchsia-100 text-fuchsia-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                        {{ $antrianBesok->count() }} antrian
-                    </span>
+                    <div class="flex items-center space-x-2">
+                        <span class="bg-fuchsia-100 text-fuchsia-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                            {{ $antrianBesok->count() }} antrian
+                        </span>
+                        @php
+                            $tomorrowStatusCount = $antrianBesok->groupBy('status')->map->count();
+                        @endphp
+                        @if(($tomorrowStatusCount['pending'] ?? 0) > 0)
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                                {{ $tomorrowStatusCount['pending'] }} ⏳
+                            </span>
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="p-4 sm:p-6 max-h-96 overflow-y-auto custom-scrollbar">
@@ -274,7 +485,16 @@
                                     #{{ $antrian->nomor }}
                                 </span>
                                 <div class="flex-1 min-w-0">
-                                    <p class="font-semibold text-gray-900 truncate">{{ $antrian->nama_tk }}</p>
+                                    <div class="flex items-center space-x-2">
+                                        <p class="font-semibold text-gray-900 truncate">{{ $antrian->nama_tk }}</p>
+                                        <span class="text-xs px-2 py-1 rounded-full {{ 
+                                            $antrian->status == 'diterima' ? 'bg-green-100 text-green-800' : 
+                                            ($antrian->status == 'cek_kasus' ? 'bg-yellow-100 text-yellow-800' : 
+                                            ($antrian->status == 'ditolak' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'))
+                                        }}">
+                                            {{ ucfirst(str_replace('_', ' ', $antrian->status)) }}
+                                        </span>
+                                    </div>
                                     <div class="flex items-center space-x-2 text-sm text-gray-600 mt-1">
                                         <i class="far fa-clock text-xs"></i>
                                         <span>{{ $antrian->jam }}</span>
@@ -302,7 +522,7 @@
     </div>
 
     <!-- Quick Actions -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
         <a href="{{ route('admin.antrian') }}" 
            class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 group">
             <div class="flex items-center">
@@ -339,9 +559,23 @@
                 </div>
                 <div class="ml-4">
                     <h3 class="font-semibold text-gray-800 group-hover:text-pink-600 transition-colors duration-200">Export Data</h3>
-                    <p class="text-sm text-gray-600 mt-1">Download data dalam format CSV</p>
+                    <p class="text-sm text-gray-600 mt-1">Download data dalam format Excel</p>
                 </div>
                 <i class="fas fa-chevron-right text-gray-400 ml-auto group-hover:text-pink-600 transform group-hover:translate-x-1 transition-all duration-200"></i>
+            </div>
+        </a>
+
+        <a href="{{ route('admin.qr') }}" 
+           class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 group">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100 transition-colors duration-200">
+                    <i class="fas fa-qrcode text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <h3 class="font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors duration-200">QR Code</h3>
+                    <p class="text-sm text-gray-600 mt-1">Generate QR untuk pendaftaran</p>
+                </div>
+                <i class="fas fa-chevron-right text-gray-400 ml-auto group-hover:text-indigo-600 transform group-hover:translate-x-1 transition-all duration-200"></i>
             </div>
         </a>
     </div>

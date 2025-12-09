@@ -18,48 +18,97 @@
         <div class="absolute -top-8 -left-8 w-20 h-20 bg-white/10 rounded-full"></div>
     </div>
 
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+    <!-- Status Statistics Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
         <!-- Total Data -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-green-500 relative overflow-hidden">
-            <!-- Background Pattern -->
-            <div class="absolute top-0 right-0 w-20 h-20 bg-green-50 rounded-full -mr-6 -mt-6"></div>
-            <div class="absolute bottom-0 left-0 w-12 h-12 bg-green-100 rounded-full -ml-4 -mb-4"></div>
-            
-            <div class="flex items-center relative z-10">
-                <div class="p-3 rounded-xl bg-green-50 text-green-600 shadow-sm">
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-blue-500 relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-blue-50 text-blue-600 shadow-sm">
                     <i class="fas fa-database text-xl"></i>
                 </div>
                 <div class="ml-4 flex-1">
-                    <p class="text-sm font-medium text-gray-600 flex items-center">
-                        <span>Total Data</span>
-                        <span class="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                            All Time
-                        </span>
-                    </p>
-                    <div class="flex items-baseline justify-between mb-2 mt-2">
-                        <p class="text-2xl font-bold text-gray-900">{{ number_format($antrian->total()) }}</p>
-                        <span class="text-sm font-semibold text-green-600">
-                            {{ $antrian->total() > 0 ? '100%' : '0%' }}
-                        </span>
-                    </div>
-                    <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full transition-all duration-500" 
-                            style="width: 100%"></div>
-                    </div>
-                    <div class="flex justify-between text-xs text-gray-500">
-                        <span>Keseluruhan</span>
-                        <span>Semua periode</span>
+                    <p class="text-sm font-medium text-gray-600">Total Data</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($totalAntrian) }}</p>
+                    <div class="text-xs text-gray-500 mt-1">Semua Status</div>
+                </div>
+            </div>
+            <div class="absolute top-4 right-4">
+                <div class="w-3 h-3 rounded-full bg-blue-400"></div>
+            </div>
+        </div>
+
+        <!-- Status: Menunggu -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-gray-500 relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-gray-50 text-gray-600 shadow-sm">
+                    <i class="fas fa-clock text-xl"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <p class="text-sm font-medium text-gray-600">Menunggu</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($statusCounts['pending'] ?? 0) }}</p>
+                    <div class="text-xs text-gray-500 mt-1">
+                        @if($totalAntrian > 0)
+                            {{ number_format(($statusCounts['pending'] / $totalAntrian) * 100, 1) }}%
+                        @else
+                            0%
+                        @endif
                     </div>
                 </div>
             </div>
-            
-            <!-- Status Indicator -->
+            <div class="absolute top-4 right-4">
+                <div class="w-3 h-3 rounded-full bg-gray-400"></div>
+            </div>
+        </div>
+
+        <!-- Status: Diterima -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-green-500 relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-green-50 text-green-600 shadow-sm">
+                    <i class="fas fa-check-circle text-xl"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <p class="text-sm font-medium text-gray-600">Diterima</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($statusCounts['diterima'] ?? 0) }}</p>
+                    <div class="text-xs text-gray-500 mt-1">
+                        @if($totalAntrian > 0)
+                            {{ number_format(($statusCounts['diterima'] / $totalAntrian) * 100, 1) }}%
+                        @else
+                            0%
+                        @endif
+                    </div>
+                </div>
+            </div>
             <div class="absolute top-4 right-4">
                 <div class="w-3 h-3 rounded-full bg-green-400"></div>
             </div>
         </div>
 
+        <!-- Status: Cek Kasus -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-yellow-500 relative overflow-hidden">
+            <div class="flex items-center">
+                <div class="p-3 rounded-xl bg-yellow-50 text-yellow-600 shadow-sm">
+                    <i class="fas fa-search text-xl"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <p class="text-sm font-medium text-gray-600">Cek Kasus</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ number_format($statusCounts['cek_kasus'] ?? 0) }}</p>
+                    <div class="text-xs text-gray-500 mt-1">
+                        @if($totalAntrian > 0)
+                            {{ number_format(($statusCounts['cek_kasus'] / $totalAntrian) * 100, 1) }}%
+                        @else
+                            0%
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-4 right-4">
+                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
         <!-- Data Ditampilkan -->
         <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-fuchsia-500 relative overflow-hidden">
             <!-- Background Pattern -->
@@ -80,10 +129,10 @@
                     <div class="flex items-baseline justify-between mb-2 mt-2">
                         <p class="text-2xl font-bold text-gray-900">{{ number_format($antrian->count()) }}</p>
                         <span class="text-sm font-semibold 
-                            {{ $antrian->count() == $antrian->total() ? 'text-green-600' : 
-                            ($antrian->count() >= ($antrian->total() * 0.7) ? 'text-yellow-600' : 'text-blue-600') }}">
-                            @if($antrian->total() > 0)
-                                {{ number_format(($antrian->count() / $antrian->total()) * 100, 0) }}%
+                            {{ $antrian->count() == $totalAntrian ? 'text-green-600' : 
+                            ($antrian->count() >= ($totalAntrian * 0.7) ? 'text-yellow-600' : 'text-blue-600') }}">
+                            @if($totalAntrian > 0)
+                                {{ number_format(($antrian->count() / $totalAntrian) * 100, 0) }}%
                             @else
                                 0%
                             @endif
@@ -91,11 +140,11 @@
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
                         <div class="bg-gradient-to-r from-fuchsia-500 to-fuchsia-600 h-2 rounded-full transition-all duration-500" 
-                            style="width: {{ $antrian->total() > 0 ? ($antrian->count() / $antrian->total()) * 100 : 0 }}%"></div>
+                            style="width: {{ $totalAntrian > 0 ? ($antrian->count() / $totalAntrian) * 100 : 0 }}%"></div>
                     </div>
                     <div class="flex justify-between text-xs text-gray-500">
                         <span>Filter Aktif</span>
-                        <span>{{ $antrian->count() }}/{{ $antrian->total() }} data</span>
+                        <span>{{ $antrian->count() }}/{{ $totalAntrian }} data</span>
                     </div>
                 </div>
             </div>
@@ -103,9 +152,53 @@
             <!-- Status Indicator -->
             <div class="absolute top-4 right-4">
                 <div class="w-3 h-3 rounded-full 
-                    {{ $antrian->count() == $antrian->total() ? 'bg-green-400' : 
-                    ($antrian->count() >= ($antrian->total() * 0.7) ? 'bg-yellow-400' : 'bg-blue-400') }}">
+                    {{ $antrian->count() == $totalAntrian ? 'bg-green-400' : 
+                    ($antrian->count() >= ($totalAntrian * 0.7) ? 'bg-yellow-400' : 'bg-blue-400') }}">
                 </div>
+            </div>
+        </div>
+
+        <!-- Status: Ditolak -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 card-hover border-l-4 border-red-500 relative overflow-hidden">
+            <!-- Background Pattern -->
+            <div class="absolute top-0 right-0 w-20 h-20 bg-red-50 rounded-full -mr-6 -mt-6"></div>
+            <div class="absolute bottom-0 left-0 w-12 h-12 bg-red-100 rounded-full -ml-4 -mb-4"></div>
+            
+            <div class="flex items-center relative z-10">
+                <div class="p-3 rounded-xl bg-red-50 text-red-600 shadow-sm">
+                    <i class="fas fa-times-circle text-xl"></i>
+                </div>
+                <div class="ml-4 flex-1">
+                    <p class="text-sm font-medium text-gray-600 flex items-center">
+                        <span>Ditolak</span>
+                        <span class="ml-2 text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full">
+                            Status
+                        </span>
+                    </p>
+                    <div class="flex items-baseline justify-between mb-2 mt-2">
+                        <p class="text-2xl font-bold text-gray-900">{{ number_format($statusCounts['ditolak'] ?? 0) }}</p>
+                        <span class="text-sm font-semibold text-red-600">
+                            @if($totalAntrian > 0)
+                                {{ number_format(($statusCounts['ditolak'] / $totalAntrian) * 100, 1) }}%
+                            @else
+                                0%
+                            @endif
+                        </span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mb-3">
+                        <div class="bg-gradient-to-r from-red-500 to-red-600 h-2 rounded-full transition-all duration-500" 
+                            style="width: {{ $totalAntrian > 0 ? ($statusCounts['ditolak'] / $totalAntrian) * 100 : 0 }}%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span>Penolakan</span>
+                        <span>{{ $statusCounts['ditolak'] ?? 0 }}/{{ $totalAntrian }} data</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Status Indicator -->
+            <div class="absolute top-4 right-4">
+                <div class="w-3 h-3 rounded-full bg-red-400"></div>
             </div>
         </div>
 
@@ -165,8 +258,9 @@
     
     <!-- Filters -->
     <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
-        <form action="{{ route('admin.antrian') }}" method="GET" class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+        <form action="{{ route('admin.antrian') }}" method="GET" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Filter Tanggal -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-calendar-day mr-2 text-green-500"></i>Filter Tanggal
@@ -174,27 +268,128 @@
                     <input type="date" name="tanggal" value="{{ request('tanggal') }}" 
                         class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200">
                 </div>
+                
+                <!-- Filter Periode -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         <i class="fas fa-filter mr-2 text-fuchsia-500"></i>Filter Periode
                     </label>
                     <select name="filter" class="w-full border border-gray-300 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all duration-200">
-                        <option value="">Semua Data</option>
+                        <option value="">Semua Periode</option>
                         <option value="today" {{ request('filter') == 'today' ? 'selected' : '' }}>Hari Ini</option>
                         <option value="tomorrow" {{ request('filter') == 'tomorrow' ? 'selected' : '' }}>Besok</option>
                         <option value="week" {{ request('filter') == 'week' ? 'selected' : '' }}>7 Hari ke Depan</option>
                     </select>
                 </div>
+                
+                <!-- Filter Status -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-tag mr-2 text-blue-500"></i>Filter Status
+                    </label>
+                    <select name="status" class="w-full border border-gray-300 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                        <option value="">Semua Status</option>
+                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu</option>
+                        <option value="diterima" {{ request('status') == 'diterima' ? 'selected' : '' }}>Diterima</option>
+                        <option value="cek_kasus" {{ request('status') == 'cek_kasus' ? 'selected' : '' }}>Cek Kasus</option>
+                        <option value="ditolak" {{ request('status') == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+                    </select>
+                </div>
+                
+                <!-- Filter Nomor Antrian -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-hashtag mr-2 text-purple-500"></i>No Antrian
+                    </label>
+                    <input type="number" name="nomor" value="{{ request('nomor') }}" 
+                        placeholder="Cari nomor antrian"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200">
+                </div>
             </div>
-            <div class="flex space-x-3">
-                <button type="submit" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
-                    <i class="fas fa-filter mr-2"></i>Terapkan Filter
-                </button>
-                <a href="{{ route('admin.antrian') }}" class="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
-                    <i class="fas fa-refresh mr-2"></i>Reset
+            
+            <!-- Second Row Filters -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Filter Nama Tenaga Kerja -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-user mr-2 text-orange-500"></i>Nama Tenaga Kerja
+                    </label>
+                    <input type="text" name="nama_tk" value="{{ request('nama_tk') }}" 
+                        placeholder="Cari nama tenaga kerja"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200">
+                </div>
+                
+                <!-- Filter NIK -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-id-card mr-2 text-indigo-500"></i>NIK Tenaga Kerja
+                    </label>
+                    <input type="text" name="nik_tk" value="{{ request('nik_tk') }}" 
+                        placeholder="Cari NIK"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200">
+                </div>
+                
+                <!-- Filter Ahli Waris -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-users mr-2 text-teal-500"></i>Ahli Waris
+                    </label>
+                    <input type="text" name="ahli_waris" value="{{ request('ahli_waris') }}" 
+                        placeholder="Cari nama ahli waris"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all duration-200">
+                </div>
+            </div>
+            
+            <div class="flex justify-between items-center pt-2">
+                <!-- Reset Button -->
+                <a href="{{ route('admin.antrian') }}" class="flex items-center px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors duration-200">
+                    <i class="fas fa-refresh mr-2"></i>
+                    Reset Filter
                 </a>
+                
+                <!-- Action Buttons -->
+                <div class="flex space-x-3">
+                    <button type="submit" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
+                        <i class="fas fa-filter mr-2"></i>Terapkan Filter
+                    </button>
+                    
+                    <a href="{{ route('admin.export.form') }}" class="bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 flex items-center">
+                        <i class="fas fa-download mr-2"></i>Export Data
+                    </a>
+                </div>
             </div>
         </form>
+    </div>
+
+    <!-- Status Filter Quick Actions -->
+    <div class="mb-6">
+        <div class="flex flex-wrap gap-2">
+            <a href="{{ route('admin.antrian', array_merge(request()->except('status'), ['status' => ''])) }}" 
+               class="px-4 py-2 rounded-lg font-medium transition-all duration-200 
+                      {{ !request('status') ? 'bg-blue-100 text-blue-700 border border-blue-300' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                Semua ({{ $totalAntrian }})
+            </a>
+            <a href="{{ route('admin.antrian', array_merge(request()->except('status'), ['status' => 'pending'])) }}" 
+               class="px-4 py-2 rounded-lg font-medium transition-all duration-200 
+                      {{ request('status') == 'pending' ? 'bg-gray-100 text-gray-700 border border-gray-300' : 'bg-gray-50 text-gray-600 hover:bg-gray-100' }}">
+                <i class="fas fa-clock mr-1 text-gray-500"></i> Menunggu ({{ $statusCounts['pending'] ?? 0 }})
+            </a>
+            <a href="{{ route('admin.antrian', array_merge(request()->except('status'), ['status' => 'diterima'])) }}" 
+               class="px-4 py-2 rounded-lg font-medium transition-all duration-200 
+                      {{ request('status') == 'diterima' ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-green-50 text-green-600 hover:bg-green-100' }}">
+                <i class="fas fa-check-circle mr-1 text-green-500"></i> Diterima ({{ $statusCounts['diterima'] ?? 0 }})
+            </a>
+            <a href="{{ route('admin.antrian', array_merge(request()->except('status'), ['status' => 'cek_kasus'])) }}" 
+               class="px-4 py-2 rounded-lg font-medium transition-all duration-200 
+                      {{ request('status') == 'cek_kasus' ? 'bg-yellow-100 text-yellow-700 border border-yellow-300' : 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100' }}">
+                <i class="fas fa-search mr-1 text-yellow-500"></i> Cek Kasus ({{ $statusCounts['cek_kasus'] ?? 0 }})
+            </a>
+            <a href="{{ route('admin.antrian', array_merge(request()->except('status'), ['status' => 'ditolak'])) }}" 
+               class="px-4 py-2 rounded-lg font-medium transition-all duration-200 
+                      {{ request('status') == 'ditolak' ? 'bg-red-100 text-red-700 border border-red-300' : 'bg-red-50 text-red-600 hover:bg-red-100' }}">
+                <i class="fas fa-times-circle mr-1 text-red-500"></i> Ditolak ({{ $statusCounts['ditolak'] ?? 0 }})
+            </a>
+        </div>
     </div>
 
     <!-- Data Table -->
@@ -205,6 +400,14 @@
                 <h2 class="text-lg font-semibold text-gray-800 flex items-center mb-2 sm:mb-0">
                     <i class="fas fa-list-ol mr-3 text-green-600"></i>
                     Daftar Antrian
+                    @if(request('status'))
+                        <span class="ml-2 px-2 py-1 text-xs font-medium rounded-full 
+                            {{ request('status') == 'diterima' ? 'bg-green-100 text-green-800' : 
+                              (request('status') == 'cek_kasus' ? 'bg-yellow-100 text-yellow-800' : 
+                              (request('status') == 'ditolak' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) }}">
+                            Filter: {{ ucfirst(str_replace('_', ' ', request('status'))) }}
+                        </span>
+                    @endif
                 </h2>
                 <div class="flex items-center space-x-4">
                     <span class="text-sm text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
@@ -336,9 +539,9 @@
                 data-status="{{ $item->status }}">
             
             @switch($item->status)
-                @case('dibayarkan')
+                @case('diterima')
                     <i class="fas fa-check-circle text-sm text-green-600"></i>
-                    <span class="ml-1 text-xs font-medium hidden sm:inline text-green-700">Dibayarkan</span>
+                    <span class="ml-1 text-xs font-medium hidden sm:inline text-green-700">Diterima</span>
                     @break
                 
                 @case('cek_kasus')
@@ -395,7 +598,7 @@
         <div class="px-6 py-4 border-t border-gray-100 bg-gradient-to-r from-gray-50 to-white">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <div class="text-sm text-gray-700 mb-4 sm:mb-0">
-                    Menampilkan {{ $antrian->firstItem() ?? 0 }} - {{ $antrian->lastItem() ?? 0 }} dari {{ $antrian->total() }} data
+                    Menampilkan {{ $antrian->firstItem() ?? 0 }} - {{ $antrian->lastItem() ?? 0 }} dari {{ $totalAntrian }} data
                 </div>
                 <div class="flex justify-center">
                     <!-- Custom Pagination -->
@@ -571,7 +774,7 @@
         border: 1px solid transparent;
     }
     
-    .status-btn[data-status="dibayarkan"] {
+    .status-btn[data-status="diterima"] {
         background-color: rgba(34, 197, 94, 0.1);
         border-color: rgba(34, 197, 94, 0.2);
     }
@@ -704,11 +907,11 @@ function openStatusDropdown(event, id, currentStatus) {
         <div class="p-2">
             <button type="button" 
                     class="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-green-50 text-green-600 flex items-center mb-1 
-                           ${currentStatus === 'dibayarkan' ? 'bg-green-50 font-medium border-l-4 border-green-500' : ''}"
-                    onclick="updateStatus(${id}, 'dibayarkan')">
+                           ${currentStatus === 'diterima' ? 'bg-green-50 font-medium border-l-4 border-green-500' : ''}"
+                    onclick="updateStatus(${id}, 'diterima')">
                 <i class="fas fa-check-circle mr-2"></i>
-                Dibayarkan
-                ${currentStatus === 'dibayarkan' ? '<i class="fas fa-check ml-auto text-green-500"></i>' : ''}
+                Diterima
+                ${currentStatus === 'diterima' ? '<i class="fas fa-check ml-auto text-green-500"></i>' : ''}
             </button>
             
             <button type="button" 
@@ -808,7 +1011,7 @@ function updateButtonStatus(id, newStatus) {
     
     // Update icon dan text berdasarkan status baru
     const iconMap = {
-        'dibayarkan': { icon: 'fa-check-circle', color: 'green', text: 'dibayarkan' },
+        'diterima': { icon: 'fa-check-circle', color: 'green', text: 'Diterima' },
         'cek_kasus': { icon: 'fa-search', color: 'yellow', text: 'Cek Kasus' },
         'ditolak': { icon: 'fa-times-circle', color: 'red', text: 'Ditolak' },
         'pending': { icon: 'fa-clock', color: 'gray', text: 'Pending' }
@@ -831,7 +1034,7 @@ function updateButtonStatus(id, newStatus) {
     
     // Update class styling
     const colorClasses = {
-        'dibayarkan': 'bg-green-50 border-green-500',
+        'diterima': 'bg-green-50 border-green-500',
         'cek_kasus': 'bg-yellow-50 border-yellow-500',
         'ditolak': 'bg-red-50 border-red-500',
         'pending': 'bg-gray-50 border-gray-500'

@@ -44,6 +44,14 @@ class AdminController extends Controller
             ])->count(),
         ];
 
+        // Hitung status counts untuk dashboard
+        $statusCounts = [
+            'pending' => Antrian::where('status', 'pending')->count(),
+            'diterima' => Antrian::where('status', 'diterima')->count(),
+            'cek_kasus' => Antrian::where('status', 'cek_kasus')->count(),
+            'ditolak' => Antrian::where('status', 'ditolak')->count(),
+        ];
+
         // Antrian hari ini
         $antrianHariIni = Antrian::where('tanggal', $today)
             ->orderBy('nomor')
@@ -54,11 +62,11 @@ class AdminController extends Controller
             ->orderBy('nomor')
             ->get();
 
-        return view('admin.dashboard', compact('stats', 'antrianHariIni', 'antrianBesok'));
+        return view('admin.dashboard', compact('stats', 'statusCounts', 'antrianHariIni', 'antrianBesok'));
     }
 
     // ===============================
-    //  DATA ANTRIAN SEMUA
+    //  DATA ANTRIAN SEMUA (DIPERBARUI)
     // ===============================
     public function antrian(Request $request)
     {
@@ -88,12 +96,48 @@ class AdminController extends Controller
                     break;
             }
         }
+        
+        // Filter berdasarkan status antrian (NEW)
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+        
+        // Filter berdasarkan nomor antrian (NEW)
+        if ($request->has('nomor') && $request->nomor) {
+            $query->where('nomor', $request->nomor);
+        }
+        
+        // Filter berdasarkan nama tenaga kerja (NEW)
+        if ($request->has('nama_tk') && $request->nama_tk) {
+            $query->where('nama_tk', 'like', '%' . $request->nama_tk . '%');
+        }
+        
+        // Filter berdasarkan NIK (NEW)
+        if ($request->has('nik_tk') && $request->nik_tk) {
+            $query->where('nik_tk', 'like', '%' . $request->nik_tk . '%');
+        }
+        
+        // Filter berdasarkan ahli waris (NEW)
+        if ($request->has('ahli_waris') && $request->ahli_waris) {
+            $query->where('ahli_waris', 'like', '%' . $request->ahli_waris . '%');
+        }
+
+        // Hitung total semua data
+        $totalAntrian = Antrian::count();
+        
+        // Hitung jumlah berdasarkan status
+        $statusCounts = [
+            'pending' => Antrian::where('status', 'pending')->count(),
+            'diterima' => Antrian::where('status', 'diterima')->count(),
+            'cek_kasus' => Antrian::where('status', 'cek_kasus')->count(),
+            'ditolak' => Antrian::where('status', 'ditolak')->count(),
+        ];
 
         $antrian = $query->orderBy('tanggal', 'desc')
             ->orderBy('nomor')
-            ->paginate(15);
+            ->paginate(20);
 
-        return view('admin.antrian', compact('antrian'));
+        return view('admin.antrian', compact('antrian', 'totalAntrian', 'statusCounts'));
     }
 
     // ===============================
@@ -147,11 +191,20 @@ class AdminController extends Controller
     }
 
     // ===============================
-    //  FORM EXPORT DATA
+    //  FORM EXPORT DATA (DIPERBARUI)
     // ===============================
     public function exportForm()
     {
-        return view('admin.export');
+        // Tambahkan statistik untuk ditampilkan di form export
+        $totalAntrian = Antrian::count();
+        $statusCounts = [
+            'pending' => Antrian::where('status', 'pending')->count(),
+            'diterima' => Antrian::where('status', 'diterima')->count(),
+            'cek_kasus' => Antrian::where('status', 'cek_kasus')->count(),
+            'ditolak' => Antrian::where('status', 'ditolak')->count(),
+        ];
+        
+        return view('admin.export', compact('totalAntrian', 'statusCounts'));
     }
 
     // ===============================
@@ -212,7 +265,7 @@ class AdminController extends Controller
     }
 
     // ===============================
-    //  CEK KUOTA ADMIN
+    //  CEK KUOTA ADMIN (DIPERBARUI)
     // ===============================
     public function kuotaAdmin(Request $request)
     {
@@ -241,10 +294,19 @@ class AdminController extends Controller
         $totalKuota = 15;
         $totalTerisi = $antrian->count();
         $totalTersisa = $totalKuota - $totalTerisi;
+        
+        // Hitung statistik status untuk tanggal tersebut (NEW)
+        $statusCountsToday = [
+            'pending' => $antrian->where('status', 'pending')->count(),
+            'diterima' => $antrian->where('status', 'diterima')->count(),
+            'cek_kasus' => $antrian->where('status', 'cek_kasus')->count(),
+            'ditolak' => $antrian->where('status', 'ditolak')->count(),
+        ];
 
         return view('admin.kuota', compact(
             'antrian', 'blocks', 'tanggal', 
-            'totalKuota', 'totalTerisi', 'totalTersisa'
+            'totalKuota', 'totalTerisi', 'totalTersisa',
+            'statusCountsToday'  // NEW
         ));
     }
 
